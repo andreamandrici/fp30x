@@ -1,7 +1,7 @@
 # FP30X
 Roland fp30x info
 
-## Program change:
+## PROGRAM CHANGE
 Tieni premuto
 * uno dei tasti categoria (PIANO, E. PIANO, OTHER) +
 * una nota da A0 a a G2 (ogni nota seleziona uno dei 56 timbri integrati)
