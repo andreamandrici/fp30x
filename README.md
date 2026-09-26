@@ -1,2 +1,0 @@
-# fp30x
-Roland fp30x info
