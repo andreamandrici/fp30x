@@ -71,21 +71,23 @@
 
 
 ### Dual Mode (Sovrapposizione)
-*  Tieni premuto
-  * un tasto categoria (es. PIANO) +
-  * un altro tasto categoria (es. OTHER)
-  * Mix Balance in modalità DUAL
-Tieni premuto uno dei due tasti Tone accesi +
+Tieni premuto
+* un tasto categoria (es. PIANO) +
+* un altro tasto categoria (es. OTHER)
+#### Mix Balance in modalità DUAL
+Tieni premuto
+* uno dei due tasti Tone accesi +
   * F5 Diminuisce il volume del secondo suono (valori: -1, -2)
   * F#5 Valore di default (0)
   * G5 Aumenta il volume del secondo suono (valori: +1, +2)
   
 ### Split
-Split Point (Punto di divisione): Tieni premuto
-  * SPLIT +
-  * la nota desiderata per spostare il taglio.
-* Mix Balance in modalità SPLIT
-Tieni premuto uno dei due tasti Tone accesi +
+### Split Point: Tieni premuto
+* SPLIT +
+* la nota desiderata per spostare il taglio.
+### Mix Balance in modalità SPLIT
+Tieni premuto
+* uno dei due tasti Tone accesi +
   * C5 Diminuisce il volume del secondo suono (valori: -1, -2)
   * C#5 Valore di default (0)
   * D5 Aumenta il volume del secondo suono (valori: +1, +2)
