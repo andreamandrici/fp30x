@@ -71,12 +71,21 @@ Tieni premuto
 Tieni premuto
 * un tasto categoria (es. PIANO) +
 * un altro tasto categoria (es. OTHER)
+### Program change in modalità DUAL
+* Suono 1: Tieni premuto
+  * il primo tasto categoria acceso
+  * il tasto della nota corrispondente allo strumento desiderato
+* Suono 2: Tieni premuto
+  * il secondo tasto categoria acceso
+  * il tasto della nota corrispondente allo strumento desiderato.
 ### Mix Balance in modalità DUAL
 Tieni premuto
 * uno dei due tasti Tone accesi +
   * F5 Diminuisce il volume del secondo suono (valori: -1, -2)
   * F#5 Valore di default (0)
   * G5 Aumenta il volume del secondo suono (valori: +1, +2)
+### Uscire dalla modalità Dual
+premi un singolo tasto categoria (ad esempio solo PIANO o solo E. PIANO).
   
 ## Split
 Tieni premuto
