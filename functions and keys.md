@@ -3,6 +3,18 @@
   * uno dei tasti categoria (PIANO, E. PIANO, OTHER) +
   * premi una nota da A0 a a G2 (ogni nota seleziona uno dei 56 timbri integrati).
     * PIANO (12 suoni): A0-B1
+      * A0 Concert Piano
+      * A#0 Ballad Piano
+      * B0 Mellow Piano
+      * C1 Bright Piano
+      * C#1 Upright Piano
+      * D1 Mellow Upright
+      * D#1 Bright Upright
+      * E1 Rock Piano
+      * F1 Ragtime Piano
+      * F#1 Harpsichord
+      * G1 Harpsichord 8'+4'
+      * G#1 Magical Piano 
     * E. PIANO (20 suoni): A0-D#2
     * OTHER (24 suoni): A0-G2.
  
