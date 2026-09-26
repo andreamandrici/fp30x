@@ -2,9 +2,9 @@
 * Tieni premuto
   * uno dei tasti categoria (PIANO, E. PIANO, OTHER) +
   * premi una nota da A0 a a G2 (ogni nota seleziona uno dei 56 timbri integrati).
-   * PIANO (12 suoni): A0-B1
-   * E. PIANO (20 suoni): A0-D#2
-   * OTHER (24 suoni): A0-G2.
+    * PIANO (12 suoni): A0-B1
+    * E. PIANO (20 suoni): A0-D#2
+    * OTHER (24 suoni): A0-G2.
  
 
 ## Modalità Tastiera
