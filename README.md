@@ -109,6 +109,13 @@ Range -2–+2 (default: 0)
   * C5 Diminuisce il volume del secondo suono (step: -1)
   * C#5 Setta il valore di default (0)
   * D5 Aumenta il volume del secondo suono (step: +1)
+ 
+## TWIN
+On/Off: Tieni premuto
+* FUNCTION + 
+  * G4: Twin Piano OFF
+  * G#4: Twin Piano ON - Modalità PAIR (L'audio è miscelato per entrambe le cuffie)
+  * A4: Twin Piano ON - Modalità INDIVIDUAL (Audio separato: cuffia destra per la sezione destra, cuffia sinistra per la sezione sinistra)
 
 ## BRILLIANCE
 Range -1–+1 (default: 0)
@@ -124,12 +131,13 @@ Range 0–10 (default: 1)
   * C#5: Setta il valore di default (1)
   * D5: Aumenta il valore (step: +1)
     
-## TWIN
-On/Off: Tieni premuto
-* FUNCTION + 
-  * G4: Twin Piano OFF
-  * G#4: Twin Piano ON - Modalità PAIR (L'audio è miscelato per entrambe le cuffie)
-  * A4: Twin Piano ON - Modalità INDIVIDUAL (Audio separato: cuffia destra per la sezione destra, cuffia sinistra per la sezione sinistra)
+## LOCAL ON/OFF
+* ON
+  * [FUNCTION] + 
+  * F1
+* OFF
+  * [FUNCTION] + 
+  * F#1
  
 ## BLUETOOTH
 * ON
