@@ -93,7 +93,8 @@ Tieni premuto
   * D5 Aumenta il volume del secondo suono (valori: +1, +2)
     
 ### Twin Piano
-On/Off: Tieni premuto FUNCTION + 
+On/Off: Tieni premuto
+* FUNCTION + 
   * G4: Twin Piano OFF
   * G#4: Twin Piano ON - Modalità PAIR (L'audio è miscelato per entrambe le cuffie)
   * A4: Twin Piano ON - Modalità INDIVIDUAL (Audio separato: cuffia destra per la sezione destra, cuffia sinistra per la sezione sinistra)
