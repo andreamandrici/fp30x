@@ -11,7 +11,7 @@
   * SPLIT +
   * la nota desiderata per spostare il taglio.
 * Twin Piano On/Off: Tieni premuto FUNCTION + 
-  * C4 (Off)
-  * C#4 (On - Audio separato destro/sinistro nelle cuffie)
-  * D4 (On - Audio miscelato).
+  * G4: Twin Piano OFF
+  * G#4: Twin Piano ON - Modalità PAIR (L'audio è miscelato per entrambe le cuffie)
+  * A4: Twin Piano ON - Modalità INDIVIDUAL (Audio separato: cuffia destra per la sezione destra, cuffia sinistra per la sezione sinistra)
 
