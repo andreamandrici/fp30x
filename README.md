@@ -82,7 +82,7 @@ Tieni premuto
   * il secondo tasto categoria acceso (es. [OTHER])
   * il tasto della nota corrispondente allo strumento desiderato (A0-G#2)
 ### Mix Balance in modalità DUAL
-Range -2–+2 (default: 0)
+Range -5–+5 (default: 0)
 * uno dei due tasti categoria accesi (es. [PIANO]) +
   * F5 Diminuisce il volume del secondo suono (step: -1)
   * F#5 Setta il valore di default (0)
@@ -104,7 +104,7 @@ Tieni premuto
   * un tasto categoria ([PIANO], [E.PIANO] o [OTHER]) +
   * la nota dello strumento desiderato (A0-G2)
 ### Mix Balance in modalità SPLIT
-Range -2–+2 (default: 0)
+Range -5–+5 (default: 0)
 * uno dei due tasti Tone accesi +
   * C5 Diminuisce il volume del secondo suono (step: -1)
   * C#5 Setta il valore di default (0)
