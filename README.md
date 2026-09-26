@@ -111,18 +111,18 @@ Tieni premuto
   * D5 Aumenta il volume del secondo suono (valori: +1, +2)
 
 ## BRILLIANCE
-Tieni premuto
-* FUNCTION + 
+Range -1–+1 (default: 0)
+* [FUNCTION] + 
   * F5: Diminuisce il valore (valori: -1)
   * F#5: Valore di default (0)
   * G5: Aumenta il valore (valori: +1) 
 
 ## REVERB
-Tieni premuto
-* FUNCTION + 
-  * F5: Diminuisce il valore (valori: -1--5)
-  * F#5: Valore di default (0)
-  * G5: Aumenta il valore (valori: +1-+5) 
+Range 0–10 (default: 1)
+* [FUNCTION] + 
+  * C5: Diminuisce il valore (step: -1)
+  * C#5: Setta il valore di default (1)
+  * D5: Aumenta il valore (step: +1)
     
 ## TWIN
 On/Off: Tieni premuto
