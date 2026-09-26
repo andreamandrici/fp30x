@@ -67,7 +67,7 @@ Tieni premuto
       * G2 AcousticBass
       * G#2 A.Bass+Cymbl
 
-## Dual Mode (Sovrapposizione)
+## DUAL
 Tieni premuto
 * un tasto categoria (es. PIANO) +
 * un altro tasto categoria (es. OTHER)
@@ -87,10 +87,19 @@ Tieni premuto
 ### Uscire dalla modalità Dual
 premi un singolo tasto categoria (ad esempio solo PIANO o solo E. PIANO).
   
-## Split
+## SPLIT
+### Definisci lo Split point
 Tieni premuto
 * SPLIT +
 * la nota desiderata per lo split point.
+### Program change in modalità SPLIT
+* Suono mano sinistra (Suono 2). Tieni premuto:
+  * SPLIT +
+  * un tasto categoria (PIANO, E. PIANO o OTHER) +
+  * la nota dello strumento desiderato.
+* Suono mano destra (Suono 1). Tieni premuto:
+  * un tasto categoria (PIANO, E. PIANO o OTHER) +
+  * la nota dello strumento desiderato
 ### Mix Balance in modalità SPLIT
 Tieni premuto
 * uno dei due tasti Tone accesi +
