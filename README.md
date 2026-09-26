@@ -3,9 +3,9 @@ Roland fp30x info
 
 ## PROGRAM CHANGE
 Tieni premuto
-* uno dei tasti categoria (PIANO, E. PIANO, OTHER) +
+* uno dei tasti categoria ([PIANO], [E.PIANO], [OTHER]) +
 * una nota da A0 a a G2 (ogni nota seleziona uno dei 56 timbri integrati)
-  * **PIANO** (A0–G#1)
+  * **[PIANO]** (A0–G#1)
     * A0 Concert Piano
     * A#0 Ballad Piano
     * B0 Mellow Piano
@@ -18,7 +18,7 @@ Tieni premuto
     * F#1 Magical Piano
     * G1 Harpsichord
     * G#1 Harpsi 8’+4’
-  * **E.PIANO** (A0–E2)
+  * **[E.PIANO]** (A0–E2)
     * *E.Piano* (A0–D#1) 
       * A0 1976 SuitCase
       * A#0 Wurly 200
@@ -41,7 +41,7 @@ Tieni premuto
       * D2 ChurchOrgan1
       * D#2 ChurchOrgan2
       * E2 Accordion
-  * **OTHER** (A0-G2)
+  * **[OTHER]** (A0-G2)
     * *Strings* (A0–C2)
       * A0 Epic Strings
       * A#0 Rich Strings
