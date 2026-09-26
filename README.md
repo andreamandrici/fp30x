@@ -131,6 +131,14 @@ On/Off: Tieni premuto
   * G#4: Twin Piano ON - Modalità PAIR (L'audio è miscelato per entrambe le cuffie)
   * A4: Twin Piano ON - Modalità INDIVIDUAL (Audio separato: cuffia destra per la sezione destra, cuffia sinistra per la sezione sinistra)
  
+## BLUETOOTH
+* ON
+  * [FUNCTION] + 
+  * A0
+* OFF
+  * [FUNCTION] + 
+  * A#0
+
 ## AUTO OFF
 Tieni premuto
 * FUNCTION + 
