@@ -1,71 +1,71 @@
-## Selezione Suoni (Toni) da Pannello:
-* Tieni premuto
-  * uno dei tasti categoria (PIANO, E. PIANO, OTHER) +
-  * una nota da A0 a a G2 (ogni nota seleziona uno dei 56 timbri integrati)
-    * **PIANO** (A0–G#1)
-      * A0 Concert Piano
-      * A#0 Ballad Piano
-      * B0 Mellow Piano
-      * C1 Bright Piano
-      * C#1 Upright Piano
-      * D1 Mellow Upright
-      * D#1 Bright Upright
-      * E1 Rock Piano
-      * F1 Ragtime Piano
-      * F#1 Magical Piano
-      * G1 Harpsichord
-      * G#1 Harpsi 8’+4’
-    * **E.PIANO** (A0–E2)
-      * *gruppo e.piano* (A0–D#1) 
-        * A0 1976 SuitCase
-        * A#0 Wurly 200
-        * B0 Phase EP Mix
-        * C1 80’s FM EP
-        * C#1 Clav.
-        * D1 Vibraphone
-        * D#1 Celesta
-      * *gruppo Organ* (E1–E2; -R è Leslie col tasto EPiano)
-        * E1 B.Organ Slow -R
-        * F1 Combo Jz.Org -R
-        * F#1 Ballad Organ -R
-        * G1 Gospel Spin -R
-        * G#1 Full Stops -R
-        * A1 Mellow Bars -R
-        * A#1 Lower Organ -R
-        * B1 Light Organ -R
-        * C2 Pipe Organ
-        * C#2 Nason Flt 8’
-        * D2 ChurchOrgan1
-        * D#2 ChurchOrgan2
-        * E2 Accordion
-    * **OTHER** (A0-G2)
-      * *gruppo Strings* (A0–C2)
-        * A0 Epic Strings
-        * A#0 Rich Strings
-        * B0 SymphonicStr1
-        * C1 SymphonicStr2
-        * C#1 Orchestra
-        * D1 String Trio
-        * D#1 Harpiness
-        * E1 OrchestraBrs
-        * F1 Super SynPad
-        * F#1 Choir Aahs 1
-        * G1 Choir Aahs 2
-        * G#1 D50 StackPad
-        * A1 JP8 Strings
-        * A#1 Soft Pad
-        * B1 Solina
-      * *gruppo Synth* (C2–D2)
-        * C2 Super Saw
-        * C#2 Trancy Synth
-        * D2 Flip Pad
-      * *gruppo others* (D#2–G2)
-        * D#2 Jazz Scat
-        * E2 Comp’d JBass
-        * F2 Nylon-str.Gt
-        * F#2 Steel-str.Gt
-        * G2 AcousticBass
-        * G#2 A.Bass+Cymbl
+## Program change:
+Tieni premuto
+* uno dei tasti categoria (PIANO, E. PIANO, OTHER) +
+* una nota da A0 a a G2 (ogni nota seleziona uno dei 56 timbri integrati)
+  * **PIANO** (A0–G#1)
+    * A0 Concert Piano
+    * A#0 Ballad Piano
+    * B0 Mellow Piano
+    * C1 Bright Piano
+    * C#1 Upright Piano
+    * D1 Mellow Upright
+    * D#1 Bright Upright
+    * E1 Rock Piano
+    * F1 Ragtime Piano
+    * F#1 Magical Piano
+    * G1 Harpsichord
+    * G#1 Harpsi 8’+4’
+  * **E.PIANO** (A0–E2)
+    * *gruppo e.piano* (A0–D#1) 
+      * A0 1976 SuitCase
+      * A#0 Wurly 200
+      * B0 Phase EP Mix
+      * C1 80’s FM EP
+      * C#1 Clav.
+      * D1 Vibraphone
+      * D#1 Celesta
+    * *gruppo Organ* (E1–E2; -R è Leslie col tasto EPiano)
+      * E1 B.Organ Slow -R
+      * F1 Combo Jz.Org -R
+      * F#1 Ballad Organ -R
+      * G1 Gospel Spin -R
+      * G#1 Full Stops -R
+      * A1 Mellow Bars -R
+      * A#1 Lower Organ -R
+      * B1 Light Organ -R
+      * C2 Pipe Organ
+      * C#2 Nason Flt 8’
+      * D2 ChurchOrgan1
+      * D#2 ChurchOrgan2
+      * E2 Accordion
+  * **OTHER** (A0-G2)
+    * *gruppo Strings* (A0–C2)
+      * A0 Epic Strings
+      * A#0 Rich Strings
+      * B0 SymphonicStr1
+      * C1 SymphonicStr2
+      * C#1 Orchestra
+      * D1 String Trio
+      * D#1 Harpiness
+      * E1 OrchestraBrs
+      * F1 Super SynPad
+      * F#1 Choir Aahs 1
+      * G1 Choir Aahs 2
+      * G#1 D50 StackPad
+      * A1 JP8 Strings
+      * A#1 Soft Pad
+      * B1 Solina
+    * *gruppo Synth* (C2–D2)
+      * C2 Super Saw
+      * C#2 Trancy Synth
+      * D2 Flip Pad
+    * *gruppo others* (D#2–G2)
+      * D#2 Jazz Scat
+      * E2 Comp’d JBass
+      * F2 Nylon-str.Gt
+      * F#2 Steel-str.Gt
+      * G2 AcousticBass
+      * G#2 A.Bass+Cymbl
 
 ## Modalità Tastiera
 
