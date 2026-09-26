@@ -113,4 +113,11 @@ On/Off: Tieni premuto
   * G4: Twin Piano OFF
   * G#4: Twin Piano ON - Modalità PAIR (L'audio è miscelato per entrambe le cuffie)
   * A4: Twin Piano ON - Modalità INDIVIDUAL (Audio separato: cuffia destra per la sezione destra, cuffia sinistra per la sezione sinistra)
-
+ 
+## AUTO OFF
+Tieni premuto
+* FUNCTION + 
+  * A7: 10 min
+  * A#7: 30 min
+  * B7: 240 min
+  * C8: OFF (always on)
