@@ -107,7 +107,7 @@ Tieni premuto
   * C#5 Valore di default (0)
   * D5 Aumenta il volume del secondo suono (valori: +1, +2)
     
-### Twin Piano
+## TWIN
 On/Off: Tieni premuto
 * FUNCTION + 
   * G4: Twin Piano OFF
