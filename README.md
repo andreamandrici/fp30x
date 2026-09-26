@@ -4,7 +4,7 @@ Roland fp30x info
 ## PROGRAM CHANGE
 Tieni premuto
 * uno dei tasti categoria ([PIANO], [E.PIANO], [OTHER]) +
-* una nota da A0 a a G2 (ogni nota seleziona uno dei 56 timbri integrati)
+* una nota da A0 a a G#2 (ogni nota seleziona uno dei 56 timbri integrati)
   * **[PIANO]** (A0–G#1)
     * A0 Concert Piano
     * A#0 Ballad Piano
@@ -41,7 +41,7 @@ Tieni premuto
       * D2 ChurchOrgan1
       * D#2 ChurchOrgan2
       * E2 Accordion
-  * **[OTHER]** (A0-G2)
+  * **[OTHER]** (A0-G#2)
     * *Strings* (A0–C2)
       * A0 Epic Strings
       * A#0 Rich Strings
@@ -62,7 +62,7 @@ Tieni premuto
       * C2 Super Saw
       * C#2 Trancy Synth
       * D2 Flip Pad
-    * *Others* (D#2–G2)
+    * *Others* (D#2–G#2)
       * D#2 Jazz Scat
       * E2 Comp’d JBass
       * F2 Nylon-str.Gt
@@ -77,10 +77,10 @@ Tieni premuto
 ### Program change in modalità DUAL
 * Suono 1: tieni premuto
   * il primo tasto categoria acceso (es. [PIANO]) +
-  * il tasto della nota corrispondente allo strumento desiderato (A0-G2)
+  * il tasto della nota corrispondente allo strumento desiderato (A0-G#2)
 * Suono 2: Tieni premuto
   * il secondo tasto categoria acceso (es. [OTHER])
-  * il tasto della nota corrispondente allo strumento desiderato (A0-G2)
+  * il tasto della nota corrispondente allo strumento desiderato (A0-G#2)
 ### Mix Balance in modalità DUAL
 Range -2–+2 (default: 0)
 * uno dei due tasti categoria accesi (es. [PIANO]) +
