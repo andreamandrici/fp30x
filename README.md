@@ -75,47 +75,47 @@ Tieni premuto
 * un tasto categoria (es. [PIANO]) +
 * un altro tasto categoria (es. [OTHER])
 ### Program change in modalità DUAL
-* Suono 1: iieni premuto
+* Suono 1: tieni premuto
   * il primo tasto categoria acceso (es. [PIANO]) +
   * il tasto della nota corrispondente allo strumento desiderato (A0-G2)
 * Suono 2: Tieni premuto
   * il secondo tasto categoria acceso (es. [OTHER])
   * il tasto della nota corrispondente allo strumento desiderato (A0-G2)
 ### Mix Balance in modalità DUAL
-Tieni premuto
-* uno dei due tasti categorai accesi (es. [PIANO]) +
-  * F5 Diminuisce il volume del secondo suono (valori: -1, -2)
-  * F#5 Valore di default (0)
-  * G5 Aumenta il volume del secondo suono (valori: +1, +2)
+Range -2–+2 (default: 0)
+* uno dei due tasti categoria accesi (es. [PIANO]) +
+  * F5 Diminuisce il volume del secondo suono (step: -1)
+  * F#5 Setta il valore di default (0)
+  * G5 Aumenta il volume del secondo suono (step: +1)
 ### Uscire dalla modalità Dual
-premi un singolo tasto categoria (ad esempio solo PIANO o solo E. PIANO).
+premi un singolo tasto categoria (ad esempio solo [PIANO] o solo [E.PIANO]).
   
 ## SPLIT
 ### Definisci lo Split point
 Tieni premuto
-* SPLIT +
+* [SPLIT] +
 * la nota desiderata per lo split point.
 ### Program change in modalità SPLIT
 * Suono mano sinistra (Suono 2). Tieni premuto:
   * SPLIT +
-  * un tasto categoria (PIANO, E. PIANO o OTHER) +
-  * la nota dello strumento desiderato.
+  * un tasto categoria ([PIANO], [E.PIANO] o [OTHER]) +
+  * la nota dello strumento desiderato (A0-G2)
 * Suono mano destra (Suono 1). Tieni premuto:
-  * un tasto categoria (PIANO, E. PIANO o OTHER) +
-  * la nota dello strumento desiderato
+  * un tasto categoria ([PIANO], [E.PIANO] o [OTHER]) +
+  * la nota dello strumento desiderato (A0-G2)
 ### Mix Balance in modalità SPLIT
-Tieni premuto
+Range -2–+2 (default: 0)
 * uno dei due tasti Tone accesi +
-  * C5 Diminuisce il volume del secondo suono (valori: -1, -2)
-  * C#5 Valore di default (0)
-  * D5 Aumenta il volume del secondo suono (valori: +1, +2)
+  * C5 Diminuisce il volume del secondo suono (step: -1)
+  * C#5 Setta il valore di default (0)
+  * D5 Aumenta il volume del secondo suono (step: +1)
 
 ## BRILLIANCE
 Range -1–+1 (default: 0)
 * [FUNCTION] + 
-  * F5: Diminuisce il valore (valori: -1)
-  * F#5: Valore di default (0)
-  * G5: Aumenta il valore (valori: +1) 
+  * F5: Diminuisce il valore (step: -1)
+  * F#5: Setta il valore di default (0)
+  * G5: Aumenta il valore (step: +1) 
 
 ## REVERB
 Range 0–10 (default: 1)
