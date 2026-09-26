@@ -1,3 +1,6 @@
+# FP30X
+Roland fp30x info
+
 ## Program change:
 Tieni premuto
 * uno dei tasti categoria (PIANO, E. PIANO, OTHER) +
