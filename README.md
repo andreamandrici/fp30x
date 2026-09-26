@@ -99,10 +99,10 @@ Tieni premuto
 * Suono mano sinistra (Suono 2). Tieni premuto:
   * SPLIT +
   * un tasto categoria ([PIANO], [E.PIANO] o [OTHER]) +
-  * la nota dello strumento desiderato (A0-G2)
+  * la nota dello strumento desiderato (A0-G#2)
 * Suono mano destra (Suono 1). Tieni premuto:
   * un tasto categoria ([PIANO], [E.PIANO] o [OTHER]) +
-  * la nota dello strumento desiderato (A0-G2)
+  * la nota dello strumento desiderato (A0-G#2)
 ### Mix Balance in modalità SPLIT
 Range -5–+5 (default: 0)
 * uno dei due tasti Tone accesi +
