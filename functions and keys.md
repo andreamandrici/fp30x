@@ -67,24 +67,21 @@ Tieni premuto
       * G2 AcousticBass
       * G#2 A.Bass+Cymbl
 
-## Modalità Tastiera
-
-
-### Dual Mode (Sovrapposizione)
+## Dual Mode (Sovrapposizione)
 Tieni premuto
 * un tasto categoria (es. PIANO) +
 * un altro tasto categoria (es. OTHER)
-#### Mix Balance in modalità DUAL
+### Mix Balance in modalità DUAL
 Tieni premuto
 * uno dei due tasti Tone accesi +
   * F5 Diminuisce il volume del secondo suono (valori: -1, -2)
   * F#5 Valore di default (0)
   * G5 Aumenta il volume del secondo suono (valori: +1, +2)
   
-### Split
-### Split Point: Tieni premuto
+## Split
+Tieni premuto
 * SPLIT +
-* la nota desiderata per spostare il taglio.
+* la nota desiderata per lo split point.
 ### Mix Balance in modalità SPLIT
 Tieni premuto
 * uno dei due tasti Tone accesi +
