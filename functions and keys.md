@@ -16,7 +16,7 @@ Tieni premuto
     * G1 Harpsichord
     * G#1 Harpsi 8’+4’
   * **E.PIANO** (A0–E2)
-    * *gruppo e.piano* (A0–D#1) 
+    * *E.Piano* (A0–D#1) 
       * A0 1976 SuitCase
       * A#0 Wurly 200
       * B0 Phase EP Mix
@@ -39,7 +39,7 @@ Tieni premuto
       * D#2 ChurchOrgan2
       * E2 Accordion
   * **OTHER** (A0-G2)
-    * *gruppo Strings* (A0–C2)
+    * *Strings* (A0–C2)
       * A0 Epic Strings
       * A#0 Rich Strings
       * B0 SymphonicStr1
@@ -55,11 +55,11 @@ Tieni premuto
       * A1 JP8 Strings
       * A#1 Soft Pad
       * B1 Solina
-    * *gruppo Synth* (C2–D2)
+    * *Synth* (C2–D2)
       * C2 Super Saw
       * C#2 Trancy Synth
       * D2 Flip Pad
-    * *gruppo others* (D#2–G2)
+    * *Others* (D#2–G2)
       * D#2 Jazz Scat
       * E2 Comp’d JBass
       * F2 Nylon-str.Gt
