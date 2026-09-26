@@ -109,6 +109,13 @@ Tieni premuto
   * C5 Diminuisce il volume del secondo suono (valori: -1, -2)
   * C#5 Valore di default (0)
   * D5 Aumenta il volume del secondo suono (valori: +1, +2)
+
+## BRILLIANCE
+Tieni premuto
+* FUNCTION + 
+  * F5: Diminuisce il volume del secondo suono (valori: -1)
+  * F#5: Valore di default (0)
+  * G5: Aumenta il volume del secondo suono (valori: +1) 
     
 ## TWIN
 On/Off: Tieni premuto
