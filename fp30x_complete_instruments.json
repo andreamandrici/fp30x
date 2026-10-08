@@ -1,0 +1,914 @@
+{
+  "Roland Piani Nativi (SuperNATURAL)": [
+    {
+      "name": "Concert Piano",
+      "msb": 0,
+      "lsb": 68,
+      "pc": 0
+    },
+    {
+      "name": "Ballad Piano",
+      "msb": 0,
+      "lsb": 65,
+      "pc": 0
+    },
+    {
+      "name": "Mellow Piano",
+      "msb": 0,
+      "lsb": 66,
+      "pc": 0
+    },
+    {
+      "name": "Bright Piano",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 1
+    },
+    {
+      "name": "Upright Piano",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 3
+    },
+    {
+      "name": "Ragtime Piano",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 0
+    },
+    {
+      "name": "Harpsichord",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 6
+    },
+    {
+      "name": "Harpsichord 2",
+      "msb": 0,
+      "lsb": 65,
+      "pc": 6
+    }
+  ],
+  "Roland Piano Elettrici Nativi": [
+    {
+      "name": "1976 Suitcase",
+      "msb": 0,
+      "lsb": 65,
+      "pc": 4
+    },
+    {
+      "name": "Tine EP",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 4
+    },
+    {
+      "name": "FM E.Piano",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 5
+    },
+    {
+      "name": "Vibrant Clavi",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 7
+    },
+    {
+      "name": "Synth Piano",
+      "msb": 0,
+      "lsb": 67,
+      "pc": 5
+    }
+  ],
+  "Roland Organi & Altri Nativi": [
+    {
+      "name": "Church Organ",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 19
+    },
+    {
+      "name": "Combo Jz.Organ",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 16
+    },
+    {
+      "name": "Rotary Organ",
+      "msb": 0,
+      "lsb": 65,
+      "pc": 16
+    },
+    {
+      "name": "Symphonic Strings",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 48
+    },
+    {
+      "name": "Epic Strings",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 49
+    },
+    {
+      "name": "Rich Choir",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 52
+    },
+    {
+      "name": "Solina Pad",
+      "msb": 0,
+      "lsb": 65,
+      "pc": 50
+    },
+    {
+      "name": "Marimba",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 12
+    },
+    {
+      "name": "Vibraphone",
+      "msb": 0,
+      "lsb": 64,
+      "pc": 11
+    }
+  ],
+  "GM2 - Pianoforti (Nascosti)": [
+    {
+      "name": "Acoustic Grand Piano",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 0
+    },
+    {
+      "name": "Wide Acoustic Grand",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 0
+    },
+    {
+      "name": "Dark Acoustic Grand",
+      "msb": 121,
+      "lsb": 2,
+      "pc": 0
+    },
+    {
+      "name": "Bright Acoustic Piano",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 1
+    },
+    {
+      "name": "Wide Bright Acoustic",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 1
+    },
+    {
+      "name": "Electric Grand Piano",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 2
+    },
+    {
+      "name": "Wide Electric Grand",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 2
+    },
+    {
+      "name": "Honky-tonk Piano",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 3
+    },
+    {
+      "name": "Wide Honky-tonk",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 3
+    },
+    {
+      "name": "Electric Piano 1",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 4
+    },
+    {
+      "name": "Detuned EP 1",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 4
+    },
+    {
+      "name": "EP 1 Velocity Mix",
+      "msb": 121,
+      "lsb": 2,
+      "pc": 4
+    },
+    {
+      "name": "60s Electric Piano",
+      "msb": 121,
+      "lsb": 3,
+      "pc": 4
+    },
+    {
+      "name": "Electric Piano 2",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 5
+    },
+    {
+      "name": "Detuned EP 2",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 5
+    },
+    {
+      "name": "EP 2 Velocity Mix",
+      "msb": 121,
+      "lsb": 2,
+      "pc": 5
+    },
+    {
+      "name": "EP Legend",
+      "msb": 121,
+      "lsb": 3,
+      "pc": 5
+    },
+    {
+      "name": "EP Phase",
+      "msb": 121,
+      "lsb": 4,
+      "pc": 5
+    },
+    {
+      "name": "Harpsichord",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 6
+    },
+    {
+      "name": "Wide Harpsichord",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 6
+    },
+    {
+      "name": "Key Off Harpsichord",
+      "msb": 121,
+      "lsb": 2,
+      "pc": 6
+    },
+    {
+      "name": "Clavinet",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 7
+    },
+    {
+      "name": "Pulse Clavinet",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 7
+    }
+  ],
+  "GM2 - Percussioni Cromatiche": [
+    {
+      "name": "Celesta",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 8
+    },
+    {
+      "name": "Glockenspiel",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 9
+    },
+    {
+      "name": "Music Box",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 10
+    },
+    {
+      "name": "Vibraphone",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 11
+    },
+    {
+      "name": "Wet Vibraphone",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 11
+    },
+    {
+      "name": "Marimba",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 12
+    },
+    {
+      "name": "Wide Marimba",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 12
+    },
+    {
+      "name": "Xylophone",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 13
+    },
+    {
+      "name": "Tubular Bells",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 14
+    },
+    {
+      "name": "Church Bell",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 14
+    },
+    {
+      "name": "Carillon",
+      "msb": 121,
+      "lsb": 2,
+      "pc": 14
+    },
+    {
+      "name": "Dulcimer",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 15
+    }
+  ],
+  "GM2 - Organi": [
+    {
+      "name": "Drawbar Organ",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 16
+    },
+    {
+      "name": "Detuned Drawbar Organ",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 16
+    },
+    {
+      "name": "Italian 60s Organ",
+      "msb": 121,
+      "lsb": 2,
+      "pc": 16
+    },
+    {
+      "name": "Percussive Organ",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 17
+    },
+    {
+      "name": "Rock Organ",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 18
+    },
+    {
+      "name": "Church Organ 1",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 19
+    },
+    {
+      "name": "Reed Organ",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 20
+    },
+    {
+      "name": "Accordion",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 21
+    },
+    {
+      "name": "Harmonica",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 22
+    },
+    {
+      "name": "Tango Accordion",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 23
+    }
+  ],
+  "GM2 - Chitarre & Bassi": [
+    {
+      "name": "Nylon Guitar",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 24
+    },
+    {
+      "name": "Ukulele",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 24
+    },
+    {
+      "name": "Steel Guitar",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 25
+    },
+    {
+      "name": "12-string Guitar",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 25
+    },
+    {
+      "name": "Mandolin",
+      "msb": 121,
+      "lsb": 2,
+      "pc": 25
+    },
+    {
+      "name": "Jazz Guitar",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 26
+    },
+    {
+      "name": "Clean Guitar",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 27
+    },
+    {
+      "name": "Muted Guitar",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 28
+    },
+    {
+      "name": "Overdriven Guitar",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 29
+    },
+    {
+      "name": "Distortion Guitar",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 30
+    },
+    {
+      "name": "Acoustic Bass",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 32
+    },
+    {
+      "name": "Fingered Bass",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 33
+    },
+    {
+      "name": "Picked Bass",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 34
+    },
+    {
+      "name": "Fretless Bass",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 35
+    },
+    {
+      "name": "Slap Bass 1",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 36
+    },
+    {
+      "name": "Synth Bass 1",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 38
+    },
+    {
+      "name": "Synth Bass 2",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 39
+    }
+  ],
+  "GM2 - Archi ed Ensemble": [
+    {
+      "name": "Violin",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 40
+    },
+    {
+      "name": "Viola",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 41
+    },
+    {
+      "name": "Cello",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 42
+    },
+    {
+      "name": "Contrabass",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 43
+    },
+    {
+      "name": "Tremolo Strings",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 44
+    },
+    {
+      "name": "Pizzicato Strings",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 45
+    },
+    {
+      "name": "Orchestral Harp",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 46
+    },
+    {
+      "name": "Timpani",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 47
+    },
+    {
+      "name": "String Ensemble 1",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 48
+    },
+    {
+      "name": "String Ensemble 2",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 49
+    },
+    {
+      "name": "Synth Strings 1",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 50
+    },
+    {
+      "name": "Choir Aahs",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 52
+    },
+    {
+      "name": "Voice Oohs",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 53
+    },
+    {
+      "name": "Synth Voice",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 54
+    },
+    {
+      "name": "Orchestra Hit",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 55
+    }
+  ],
+  "GM2 - Ottoni & Fiati": [
+    {
+      "name": "Trumpet",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 56
+    },
+    {
+      "name": "Trombone",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 57
+    },
+    {
+      "name": "Tuba",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 58
+    },
+    {
+      "name": "Muted Trumpet",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 59
+    },
+    {
+      "name": "French Horn",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 60
+    },
+    {
+      "name": "Brass Section",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 61
+    },
+    {
+      "name": "Synth Brass 1",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 62
+    },
+    {
+      "name": "Soprano Sax",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 64
+    },
+    {
+      "name": "Alto Sax",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 65
+    },
+    {
+      "name": "Tenor Sax",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 66
+    },
+    {
+      "name": "Oboe",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 68
+    },
+    {
+      "name": "English Horn",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 69
+    },
+    {
+      "name": "Bassoon",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 70
+    },
+    {
+      "name": "Clarinet",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 71
+    },
+    {
+      "name": "Piccolo",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 72
+    },
+    {
+      "name": "Flute",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 73
+    },
+    {
+      "name": "Recorder",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 74
+    },
+    {
+      "name": "Pan Flute",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 75
+    }
+  ],
+  "GM2 - Synth Leads & Pads": [
+    {
+      "name": "Square Lead",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 80
+    },
+    {
+      "name": "Sawtooth Lead",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 81
+    },
+    {
+      "name": "Calliope Lead",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 82
+    },
+    {
+      "name": "Chiff Lead",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 83
+    },
+    {
+      "name": "Charang Lead",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 84
+    },
+    {
+      "name": "Voice Lead",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 85
+    },
+    {
+      "name": "New Age Pad",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 88
+    },
+    {
+      "name": "Warm Pad",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 89
+    },
+    {
+      "name": "Polysynth Pad",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 90
+    },
+    {
+      "name": "Choir Pad",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 91
+    },
+    {
+      "name": "Bowed Pad",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 92
+    },
+    {
+      "name": "Halo Pad",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 94
+    },
+    {
+      "name": "Sweep Pad",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 95
+    }
+  ],
+  "GM2 - Sound FX / Etnici": [
+    {
+      "name": "Sitar",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 104
+    },
+    {
+      "name": "Banjo",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 105
+    },
+    {
+      "name": "Shamisen",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 106
+    },
+    {
+      "name": "Koto",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 107
+    },
+    {
+      "name": "Kalimba",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 108
+    },
+    {
+      "name": "Steel Drums",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 114
+    },
+    {
+      "name": "Rain",
+      "msb": 121,
+      "lsb": 1,
+      "pc": 122
+    },
+    {
+      "name": "Thunder",
+      "msb": 121,
+      "lsb": 2,
+      "pc": 122
+    },
+    {
+      "name": "Bird Tweet",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 123
+    },
+    {
+      "name": "Gunshot",
+      "msb": 121,
+      "lsb": 0,
+      "pc": 127
+    }
+  ],
+  "Roland Drum Kits": [
+    {
+      "name": "Standard Kit",
+      "msb": 120,
+      "lsb": 0,
+      "pc": 0
+    },
+    {
+      "name": "Room Kit",
+      "msb": 120,
+      "lsb": 0,
+      "pc": 8
+    },
+    {
+      "name": "Power Kit",
+      "msb": 120,
+      "lsb": 0,
+      "pc": 16
+    },
+    {
+      "name": "Electronic Kit",
+      "msb": 120,
+      "lsb": 0,
+      "pc": 24
+    },
+    {
+      "name": "Analog Kit (TR-808)",
+      "msb": 120,
+      "lsb": 0,
+      "pc": 25
+    },
+    {
+      "name": "Jazz Kit",
+      "msb": 120,
+      "lsb": 0,
+      "pc": 32
+    },
+    {
+      "name": "Brush Kit",
+      "msb": 120,
+      "lsb": 0,
+      "pc": 40
+    },
+    {
+      "name": "Orchestra Kit",
+      "msb": 120,
+      "lsb": 0,
+      "pc": 48
+    }
+  ]
+}
