@@ -395,17 +395,18 @@ function sendInstrumentChange() {
     if (!activeOutput) { alert("Nessun output MIDI selezionato!"); return; }
     
     const instData = JSON.parse(document.getElementById("instrumentSelect").value);
-    
-    // Per i Drum Kit usiamo solitamente il Canale 10 (indice 9), per gli altri il Canale 1 (indice 0)
     const channel = (instData.msb === 120) ? 9 : 0;
     
     const ccStatus = 0xB0 | channel;
     const pcStatus = 0xC0 | channel;
 
-    // Sequenza temporizzata per evitare sovrapposizioni nei buffer hardware
-    activeOutput.send([ccStatus, 0, instData.msb]);   // CC 0
-    activeOutput.send([ccStatus, 32, instData.lsb]);  // CC 32
-    activeOutput.send([pcStatus, instData.pc]);       // Program Change
+    // Recupera il timestamp attuale ad altissima precisione del browser
+    const now = window.performance.now();
+
+    // Invia i messaggi distanziati di 5 millisecondi l'uno dall'altro
+    activeOutput.send([ccStatus, 0, instData.msb], now);          // Subito
+    activeOutput.send([ccStatus, 32, instData.lsb], now + 5);      // Dopo 5ms
+    activeOutput.send([pcStatus, instData.pc], now + 10);         // Dopo 10ms
 
     updateStatus(`Inviato: ${instData.name} su Ch ${channel+1}`);
 }
