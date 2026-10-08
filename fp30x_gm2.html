@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Selettore Strumenti Roland FP-30X</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a1a; color: #fff; padding: 20px; }
+        .container { max-width: 600px; background: #242424; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); margin: 0 auto; border: 1px solid #333; }
+        h2 { text-align: center; color: #ff9f43; margin-top: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .alert-info { background: #2e3d52; padding: 12px; border-radius: 6px; font-size: 13px; color: #9cdbff; margin-bottom: 20px; border-left: 4px solid #339af0; line-height: 1.4; }
+        label { display: block; margin: 15px 0 5px; font-weight: bold; color: #aaa; font-size: 14px; }
+        select, button { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #444; background: #2d2d2d; color: white; font-size: 16px; box-sizing: border-box; }
+        select:focus { outline: 2px solid #ff9f43; }
+        button { background: #ff9f43; color: #1a1a1a; font-weight: bold; margin-top: 25px; cursor: pointer; border: none; transition: background 0.2s, transform 0.1s; text-transform: uppercase; }
+        button:hover { background: #f39c12; }
+        button:active { transform: scale(0.98); }
+        .status { text-align: center; margin-top: 15px; font-size: 13px; color: #888; padding: 8px; background: #1e1e1e; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Roland FP-30X Controller</h2>
+    
+    <div class="alert-info">
+        <strong>Configurazione Pianoforte:</strong> Prima di inviare i comandi, ricorda di tenere premuto il tasto <strong>[Function]</strong> sull'FP-30X e premere il tasto <strong>A1</strong> (il secondo tasto più a sinistra) per sbloccare la ricezione MIDI interna.
+    </div>
+    
+    <label for="midiOutputs">1. Porta Output Roland (Bluetooth o USB):</label>
+    <select id="midiOutputs"><option>Inizializzazione delle porte in corso...</option></select>
+
+    <label for="categorySelect">2. Categoria Strumenti (Chart Ufficiale):</label>
+    <select id="categorySelect" onchange="updateInstruments()"></select>
+
+    <label for="instrumentSelect">3. Timbro / Patch Specifico:</label>
+    <select id="instrumentSelect"></select>
+
+    <button onclick="sendInstrumentChange()">Cambia Timbro su FP-30X</button>
+    <div id="statusLog" class="status">In attesa delle autorizzazioni Web MIDI API...</div>
+</div>
+
+<script>
+// Database statico completo Roland FP-30X incorporato per bypassare gli errori di fetch
+const fp30xDataset = {
+  "Roland Piani Nativi (SuperNATURAL)": [
+    {"name": "Concert Piano", "msb": 0, "lsb": 68, "pc": 0},
+    {"name": "Ballad Piano", "msb": 0, "lsb": 65, "pc": 0},
+    {"name": "Mellow Piano", "msb": 0, "lsb": 66, "pc": 0},
+    {"name": "Bright Piano", "msb": 0, "lsb": 64, "pc": 1},
+    {"name": "Upright Piano", "msb": 0, "lsb": 64, "pc": 3},
+    {"name": "Ragtime Piano", "msb": 0, "lsb": 64, "pc": 0}
+  ],
+  "Roland E. Piano Nativi": [
+    {"name": "1976 Suitcase (Rhodes)", "msb": 0, "lsb": 65, "pc": 4},
+    {"name": "Tine EP (Vintage)", "msb": 0, "lsb": 64, "pc": 4},
+    {"name": "FM E.Piano (DX7 Style)", "msb": 0, "lsb": 64, "pc": 5},
+    {"name": "Vibrant Clavi", "msb": 0, "lsb": 64, "pc": 7}
+  ],
+  "Roland Altri Suoni di Pannello": [
+    {"name": "Harpsichord", "msb": 0, "lsb": 64, "pc": 6},
+    {"name": "Church Organ", "msb": 0, "lsb": 64, "pc": 19},
+    {"name": "Combo Jazz Organ", "msb": 0, "lsb": 64, "pc": 16},
+    {"name": "Symphonic Strings", "msb": 0, "lsb": 64, "pc": 48},
+    {"name": "Epic Strings", "msb": 0, "lsb": 64, "pc": 49},
+    {"name": "Rich Choir", "msb": 0, "lsb": 64, "pc": 52},
+    {"name": "Marimba", "msb": 0, "lsb": 64, "pc": 12}
+  ],
+  "GM2 Hidden - Pianoforti": [
+    {"name": "Acoustic Grand (GM2)", "msb": 121, "lsb": 0, "pc": 0},
+    {"name": "Acoustic Grand (Wide)", "msb": 121, "lsb": 1, "pc": 0},
+    {"name": "Bright Piano (GM2)", "msb": 121, "lsb": 0, "pc": 1},
+    {"name": "Electric Grand", "msb": 121, "lsb": 0, "pc": 2},
+    {"name": "Honky-tonk Piano", "msb": 121, "lsb": 0, "pc": 3},
+    {"name": "Electric Piano 1", "msb": 121, "lsb": 0, "pc": 4},
+    {"name": "Electric Piano 2", "msb": 121, "lsb": 0, "pc": 5}
+  ],
+  "GM2 Hidden - Organi & Accordion": [
+    {"name": "Drawbar Organ", "msb": 121, "lsb": 0, "pc": 16},
+    {"name": "Percussive Organ", "msb": 121, "lsb": 0, "pc": 17},
+    {"name": "Rock Organ", "msb": 121, "lsb": 0, "pc": 18},
+    {"name": "Church Organ 1", "msb": 121, "lsb": 0, "pc": 19},
+    {"name": "Reed Organ", "msb": 121, "lsb": 0, "pc": 20},
+    {"name": "Accordion", "msb": 121, "lsb": 0, "pc": 21},
+    {"name": "Harmonica", "msb": 121, "lsb": 0, "pc": 22}
+  ],
+  "GM2 Hidden - Chitarre & Bassi": [
+    {"name": "Nylon-String Guitar", "msb": 121, "lsb": 0, "pc": 24},
+    {"name": "Steel-String Guitar", "msb": 121, "lsb": 0, "pc": 25},
+    {"name": "Electric Guitar (Jazz)", "msb": 121, "lsb": 0, "pc": 26},
+    {"name": "Electric Guitar (Clean)", "msb": 121, "lsb": 0, "pc": 27},
+    {"name": "Acoustic Bass", "msb": 121, "lsb": 0, "pc": 32},
+    {"name": "Electric Bass (Finger)", "msb": 121, "lsb": 0, "pc": 33},
+    {"name": "Fretless Bass", "msb": 121, "lsb": 0, "pc": 35},
+    {"name": "Synth Bass 1", "msb": 121, "lsb": 0, "pc": 38}
+  ],
+  "GM2 Hidden - Archi & Orchestrali": [
+    {"name": "Violin", "msb": 121, "lsb": 0, "pc": 40},
+    {"name": "Cello", "msb": 121, "lsb": 0, "pc": 42},
+    {"name": "Orchestral Harp", "msb": 121, "lsb": 0, "pc": 46},
+    {"name": "String Ensemble 1", "msb": 121, "lsb": 0, "pc": 48},
+    {"name": "Synth Strings 1", "msb": 121, "lsb": 0, "pc": 50},
+    {"name": "Voice Oohs", "msb": 121, "lsb": 0, "pc": 53}
+  ],
+  "GM2 Hidden - Fiati, Ottoni & Synth": [
+    {"name": "Trumpet", "msb": 121, "lsb": 0, "pc": 56},
+    {"name": "Trombone", "msb": 121, "lsb": 0, "pc": 57},
+    {"name": "Alto Sax", "msb": 121, "lsb": 0, "pc": 65},
+    {"name": "Clarinet", "msb": 121, "lsb": 0, "pc": 71},
+    {"name": "Flute", "msb": 121, "lsb": 0, "pc": 73},
+    {"name": "Square Lead", "msb": 121, "lsb": 0, "pc": 80},
+    {"name": "Sawtooth Lead", "msb": 121, "lsb": 0, "pc": 81},
+    {"name": "Warm Pad", "msb": 121, "lsb": 0, "pc": 89}
+  ],
+  "Roland Drum Kits (Nascosti)": [
+    {"name": "Standard Drum Kit", "msb": 120, "lsb": 0, "pc": 0},
+    {"name": "Room Drum Kit", "msb": 120, "lsb": 0, "pc": 8},
+    {"name": "Power Drum Kit", "msb": 120, "lsb": 0, "pc": 16},
+    {"name": "Analog Kit (TR-808)", "msb": 120, "lsb": 0, "pc": 25},
+    {"name": "Orchestra Percussion Kit", "msb": 120, "lsb": 0, "pc": 48}
+  ]
+};
+
+let midiAccess = null;
+let activeOutput = null;
+
+if (navigator.requestMIDIAccess) {
+    navigator.requestMIDIAccess().then(onMIDISuccess, () => updateStatus("⚠️ Accesso MIDI negato dal browser."));
+} else {
+    updateStatus("❌ Questo browser non supporta le Web MIDI API.");
+}
+
+function onMIDISuccess(access) {
+    midiAccess = access;
+    const outputsSelect = document.getElementById("midiOutputs");
+    outputsSelect.innerHTML = "";
+    
+    const outputs = Array.from(midiAccess.outputs.values());
+    if (outputs.length === 0) {
+        outputsSelect.innerHTML = "<option>Nessun hardware rilevato</option>";
+        updateStatus("⚠️ Connetti l'FP-30X tramite cavo USB o Bluetooth MIDI.");
+        return;
+    }
+
+    outputs.forEach((out) => {
+        let opt = document.createElement("option");
+        opt.value = out.id;
+        opt.textContent = out.name;
+        outputsSelect.appendChild(opt);
+    });
+    
+    activeOutput = outputs[0];
+    outputsSelect.onchange = (e) => activeOutput = midiAccess.outputs.get(e.target.value);
+    
+    setupCategories();
+    updateStatus("Piano connesso e pronto.");
+}
+
+function setupCategories() {
+    const catSelect = document.getElementById("categorySelect");
+    catSelect.innerHTML = "";
+    for (let cat in fp30xDataset) {
+        let opt = document.createElement("option");
+        opt.value = cat;
+        opt.textContent = cat;
+        catSelect.appendChild(opt);
+    }
+    updateInstruments();
+}
+
+function updateInstruments() {
+    const cat = document.getElementById("categorySelect").value;
+    const instSelect = document.getElementById("instrumentSelect");
+    instSelect.innerHTML = "";
+    
+    fp30xDataset[cat].forEach((inst) => {
+        let opt = document.createElement("option");
+        opt.value = JSON.stringify(inst);
+        opt.textContent = `${inst.name} [MSB:${inst.msb} LSB:${inst.lsb} PC:${inst.pc}]`;
+        instSelect.appendChild(opt);
+    });
+}
+
+function sendInstrumentChange() {
+    if (!activeOutput) { alert("Scegli la porta MIDI dell'FP-30X!"); return; }
+    
+    const instData = JSON.parse(document.getElementById("instrumentSelect").value);
+    
+    // REGOLA MANDATORIA ROLAND FP-30X DESTRATTA DALLA MIDI CHART:
+    // Canale 4 (indice logico 3) per far sì che la tastiera fisica cambi suono sotto le mani.
+    const channel = 3; 
+    
+    const ccStatus = 0xB0 | channel;
+    const pcStatus = 0xC0 | channel;
+    const now = window.performance.now();
+
+    // Sincronizzazione a pacchetti temporizzati obbligatoria per processori Roland
+    activeOutput.send([ccStatus, 0, instData.msb], now);          // Bank Select MSB
+    activeOutput.send([ccStatus, 32, instData.lsb], now + 7);     // Bank Select LSB (+7ms delay)
+    activeOutput.send([pcStatus, instData.pc], now + 14);         // Program Change (+14ms delay)
+
+    updateStatus(`Inviato a FP-30X Ch4 ➔ MSB:${instData.msb} LSB:${instData.lsb} PC:${instData.pc}`);
+}
+
+function updateStatus(msg) { document.getElementById("statusLog").textContent = msg; }
+</script>
+</body>
+</html>
