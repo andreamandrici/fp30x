@@ -395,20 +395,21 @@ function sendInstrumentChange() {
     if (!activeOutput) { alert("Nessun output MIDI selezionato!"); return; }
     
     const instData = JSON.parse(document.getElementById("instrumentSelect").value);
-    const channel = (instData.msb === 120) ? 9 : 0;
+    
+    // FORZATURA PER ROLAND FP-30X: 
+    // Canale 4 (indice 3) per i suoni melodici, Canale 10 (indice 9) per la batteria
+    const channel = (instData.msb === 120) ? 9 : 3; 
     
     const ccStatus = 0xB0 | channel;
     const pcStatus = 0xC0 | channel;
-
-    // Recupera il timestamp attuale ad altissima precisione del browser
     const now = window.performance.now();
 
-    // Invia i messaggi distanziati di 5 millisecondi l'uno dall'altro
-    activeOutput.send([ccStatus, 0, instData.msb], now);          // Subito
-    activeOutput.send([ccStatus, 32, instData.lsb], now + 5);      // Dopo 5ms
-    activeOutput.send([pcStatus, instData.pc], now + 10);         // Dopo 10ms
+    // Invio con micro-delay temporizzato per stabilità hardware
+    activeOutput.send([ccStatus, 0, instData.msb], now);
+    activeOutput.send([ccStatus, 32, instData.lsb], now + 5);
+    activeOutput.send([pcStatus, instData.pc], now + 10);
 
-    updateStatus(`Inviato: ${instData.name} su Ch ${channel+1}`);
+    updateStatus(`Inviato a FP-30X: ${instData.name} su Canale MIDI ${channel + 1}`);
 }
 
 function updateStatus(msg) { document.getElementById("statusLog").textContent = msg; }
