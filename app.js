@@ -1,10 +1,8 @@
 /* ==========================================================================
-   ROLAND FP-30X WEB CONTROLLER - APP.JS (FULL ROLAND DT1 SYSEX INTEGRATION)
+   ROLAND FP-30X WEB CONTROLLER - APP.JS (PRODUCTION READY & FULLY ENABLED)
    ========================================================================== */
 
-/* ==========================================================================
-   GLOBAL STATE & CONTINUOUS CONTROLLER (CC) DECLARATIONS
-   ========================================================================== */
+let midiAccess = null;
 let midiOutput = null;
 const MIDI_CHANNEL = 3; // Hardware Channel 4 (0xB3 for CC)
 let isMetronomeRunning = false;
@@ -33,6 +31,9 @@ const CONTROLLERS = [
    DOM ELEMENT REFERENCES
    ========================================================================== */
 const statusDiv = document.getElementById('status');
+const midiPortSelect = document.getElementById('midiPortSelect');
+const btnRefreshMidi = document.getElementById('btnRefreshMidi');
+
 const macroTypeSelect = document.getElementById('macroTypeSelect');
 const groupSelect = document.getElementById('groupSelect');
 const soundSelect = document.getElementById('soundSelect');
@@ -71,24 +72,46 @@ const btnLoadPreset = document.getElementById('btnLoadPreset');
 const btnDeletePreset = document.getElementById('btnDeletePreset');
 
 /* ==========================================================================
-   ROLAND SYSEX DT1 PROTOCOL TRANSMITTER WITH CHECKSUM CALCULATION
+   OUTPUT LOG MANAGEMENT
+   ========================================================================== */
+function appendOutputLog(text, cssClass) {
+    if (!midiMonitorLog) return;
+    const timestamp = new Date().toLocaleTimeString([], { hour12: false });
+    if (midiMonitorLog.querySelector('.system-msg') && midiMonitorLog.children.length === 1) {
+        midiMonitorLog.innerHTML = "";
+    }
+    const row = document.createElement('div'); 
+    row.className = `monitor-row ${cssClass}`;
+    row.innerText = `[${timestamp}] OUT | ${text}`;
+    midiMonitorLog.appendChild(row); 
+    midiMonitorLog.scrollTop = midiMonitorLog.scrollHeight;
+}
+
+/* ==========================================================================
+   ROLAND SYSEX DT1 PROTOCOL TRANSMITTER (BROADCAST DEVICE ID & DUAL MODEL ID)
    ========================================================================== */
 function sendRolandDT1(addressBytes, dataBytes, description) {
-    if (!midiOutput) return;
+    if (!midiOutput) {
+        appendOutputLog(`Cannot send (${description}): No MIDI Output connected`, "system-msg");
+        return;
+    }
     
     let sum = 0;
     addressBytes.forEach(b => sum += b);
     dataBytes.forEach(b => sum += b);
     let checksum = (128 - (sum % 128)) & 0x7F;
 
-    // Header Roland: F0 41 10 00 00 00 5A 12 [Addr] [Data] [Checksum] F7
-    const sysexMsg = [0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x5A, 0x12, ...addressBytes, ...dataBytes, checksum, 0xF7];
+    // Model ID 00 00 00 5A (FP-30/FP-30X) & Broadcast Device ID 7F
+    const sysexMsg1 = [0xF0, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x5A, 0x12, ...addressBytes, ...dataBytes, checksum, 0xF7];
+    // Model ID 00 00 00 66 (FP-X Series Alternative)
+    const sysexMsg2 = [0xF0, 0x41, 0x7F, 0x00, 0x00, 0x00, 0x66, 0x12, ...addressBytes, ...dataBytes, checksum, 0xF7];
     
     try {
-        midiOutput.send(sysexMsg);
+        midiOutput.send(sysexMsg1);
+        midiOutput.send(sysexMsg2);
         appendOutputLog(`SysEx DT1 Sent: ${description}`, "cc-msg");
     } catch(e) {
-        appendOutputLog(`SysEx Error: Browser or Connection blocked SysEx transmission`, "system-msg");
+        appendOutputLog(`SysEx Warning: Browser or Connection blocked raw SysEx`, "system-msg");
     }
 }
 
@@ -168,22 +191,6 @@ function handleMidiInput(event) {
 }
 
 /* ==========================================================================
-   OUTPUT LOG MANAGEMENT
-   ========================================================================== */
-function appendOutputLog(text, cssClass) {
-    if (!midiMonitorLog) return;
-    const timestamp = new Date().toLocaleTimeString([], { hour12: false });
-    if (midiMonitorLog.querySelector('.system-msg') && midiMonitorLog.children.length === 1) {
-        midiMonitorLog.innerHTML = "";
-    }
-    const row = document.createElement('div'); 
-    row.className = `monitor-row ${cssClass}`;
-    row.innerText = `[${timestamp}] OUT | ${text}`;
-    midiMonitorLog.appendChild(row); 
-    midiMonitorLog.scrollTop = midiMonitorLog.scrollHeight;
-}
-
-/* ==========================================================================
    TONE SELECTION DROPDOWNS
    ========================================================================== */
 if (macroTypeSelect) {
@@ -191,15 +198,13 @@ if (macroTypeSelect) {
         const selectedType = macroTypeSelect.value;
         groupSelect.innerHTML = '<option value="">Select Group...</option>';
         soundSelect.innerHTML = '<option value="">Select specific instrument...</option>';
-        soundSelect.disabled = true;
-        if (!selectedType) { groupSelect.disabled = true; return; }
+        if (!selectedType) return;
         
         if (typeof ROLAND_SOUNDS !== 'undefined') {
             const filteredGroups = [...new Set(ROLAND_SOUNDS.filter(s => s.type === selectedType).map(s => s.group))];
             filteredGroups.forEach(g => {
                 let opt = document.createElement('option'); opt.value = g; opt.innerHTML = g; groupSelect.appendChild(opt);
             });
-            groupSelect.disabled = false;
         }
     });
 }
@@ -209,7 +214,7 @@ if (groupSelect) {
         const selectedType = macroTypeSelect.value; 
         const selectedGroup = groupSelect.value;
         soundSelect.innerHTML = '<option value="">Select specific instrument...</option>';
-        if (!selectedGroup) { soundSelect.disabled = true; return; }
+        if (!selectedGroup) return;
         
         if (typeof ROLAND_SOUNDS !== 'undefined') {
             const filteredSounds = ROLAND_SOUNDS.filter(s => s.type === selectedType && s.group === selectedGroup);
@@ -219,7 +224,6 @@ if (groupSelect) {
                 opt.innerHTML = s.name; 
                 soundSelect.appendChild(opt);
             });
-            soundSelect.disabled = false;
         }
     });
 }
@@ -242,14 +246,15 @@ if (soundSelect) {
    ========================================================================== */
 if (reverbTypeSelect) {
     reverbTypeSelect.addEventListener('change', () => {
-        if (!midiOutput) return;
         const typeVal = parseInt(reverbTypeSelect.value);
         const sysexMsg = [0xF0, 0x7F, 0x7F, 0x04, 0x05, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, typeVal, 0xF7];
-        try {
-            midiOutput.send(sysexMsg);
-            appendOutputLog(`SysEx Sent: Reverb Type = ${reverbTypeSelect.options[reverbTypeSelect.selectedIndex].text}`, "cc-msg");
-        } catch(e) {
-            appendOutputLog(`SysEx Reverb Type blocked by browser`, "system-msg");
+        if (midiOutput) {
+            try {
+                midiOutput.send(sysexMsg);
+                appendOutputLog(`SysEx Sent: Reverb Type = ${reverbTypeSelect.options[reverbTypeSelect.selectedIndex].text}`, "cc-msg");
+            } catch(e) {
+                appendOutputLog(`SysEx Reverb Type blocked by browser`, "system-msg");
+            }
         }
     });
 }
@@ -272,7 +277,6 @@ if (metronomeBpm) {
     metronomeBpm.addEventListener('input', (e) => {
         const bpm = parseInt(e.target.value);
         if (metronomeBpmVal) metronomeBpmVal.innerText = bpm;
-        // Metronome Tempo: Addr 01 00 00 01, Data 2 Bytes MSB/LSB
         const msb = (bpm >> 7) & 0x7F;
         const lsb = bpm & 0x7F;
         sendRolandDT1([0x01, 0x00, 0x00, 0x01], [msb, lsb], `Metronome Tempo = ${bpm} BPM`);
@@ -283,7 +287,6 @@ if (metronomeVol) {
     metronomeVol.addEventListener('input', (e) => {
         const vol = parseInt(e.target.value);
         if (metronomeVolVal) metronomeVolVal.innerText = vol;
-        // Metronome Volume: Addr 01 00 00 03, Data 0..10
         sendRolandDT1([0x01, 0x00, 0x00, 0x03], [vol], `Metronome Volume = ${vol}`);
     });
 }
@@ -291,7 +294,6 @@ if (metronomeVol) {
 if (metronomeBeatsSelect) {
     metronomeBeatsSelect.addEventListener('change', () => {
         const beats = parseInt(metronomeBeatsSelect.value);
-        // Metronome Beats: Addr 01 00 00 04
         sendRolandDT1([0x01, 0x00, 0x00, 0x04], [beats], `Metronome Beats = ${metronomeBeatsSelect.options[metronomeBeatsSelect.selectedIndex].text}`);
     });
 }
@@ -299,27 +301,38 @@ if (metronomeBeatsSelect) {
 if (metronomeToneSelect) {
     metronomeToneSelect.addEventListener('change', () => {
         const tone = parseInt(metronomeToneSelect.value);
-        // Metronome Tone: Addr 01 00 00 05
         sendRolandDT1([0x01, 0x00, 0x00, 0x05], [tone], `Metronome Tone = ${metronomeToneSelect.options[metronomeToneSelect.selectedIndex].text}`);
     });
 }
 
 /* ==========================================================================
-   PIANO DESIGNER & HARDWARE SETTINGS (ROLAND SYSEX DT1)
+   PIANO DESIGNER & HARDWARE SETTINGS (ROLAND SYSEX DT1 + UNIVERSAL)
    ========================================================================== */
 if (masterVol) {
     masterVol.addEventListener('input', (e) => {
         const vol = parseInt(e.target.value);
         if (masterVolVal) masterVolVal.innerText = vol;
-        // Master Volume SysEx: Addr 01 00 00 20
+        
+        // Universal Master Volume (MIDI Standard)
+        if (midiOutput) {
+            try {
+                midiOutput.send([0xF0, 0x7F, 0x7F, 0x04, 0x01, 0x00, vol, 0xF7]);
+            } catch(e) {}
+        }
+        
+        // Roland DT1 Master Hardware Volume: Addr 01 00 00 20
         sendRolandDT1([0x01, 0x00, 0x00, 0x20], [vol], `Master Hardware Volume = ${vol}`);
+        
+        // Backup: send Channel Volume CC 7 to all channels 1..16
+        for (let ch = 0; ch < 16; ch++) {
+            if (midiOutput) midiOutput.send([0xB0 | ch, 7, vol]);
+        }
     });
 }
 
 if (keyTouchSelect) {
     keyTouchSelect.addEventListener('change', () => {
         const touch = parseInt(keyTouchSelect.value);
-        // Key Touch SysEx: Addr 01 00 00 10
         sendRolandDT1([0x01, 0x00, 0x00, 0x10], [touch], `Key Touch = ${keyTouchSelect.options[keyTouchSelect.selectedIndex].text}`);
     });
 }
@@ -327,7 +340,6 @@ if (keyTouchSelect) {
 if (brillianceSelect) {
     brillianceSelect.addEventListener('change', () => {
         const br = parseInt(brillianceSelect.value);
-        // Brilliance SysEx: Addr 01 00 00 11
         sendRolandDT1([0x01, 0x00, 0x00, 0x11], [br], `Brilliance = ${brillianceSelect.options[brillianceSelect.selectedIndex].text}`);
     });
 }
@@ -335,7 +347,6 @@ if (brillianceSelect) {
 if (speakerSelect) {
     speakerSelect.addEventListener('change', () => {
         const spk = parseInt(speakerSelect.value);
-        // Speaker SysEx: Addr 01 00 00 12
         sendRolandDT1([0x01, 0x00, 0x00, 0x12], [spk], `Speaker Mode = ${speakerSelect.options[speakerSelect.selectedIndex].text}`);
     });
 }
@@ -344,7 +355,10 @@ if (speakerSelect) {
    MIDI CC TRANSMISSION LOGIC & RESET TO DEFAULT
    ========================================================================== */
 function sendCC(ccNum, value) {
-    if (!midiOutput) return;
+    if (!midiOutput) {
+        appendOutputLog(`CC ${ccNum} set to ${value} (MIDI Output Disconnected)`, "system-msg");
+        return;
+    }
     
     if (ccNum === 7 || ccNum === 91 || ccNum === 93) {
         for (let ch = 0; ch < 16; ch++) {
@@ -561,66 +575,11 @@ if (btnDeletePreset) {
 updatePresetDropdown();
 
 /* ==========================================================================
-   WEB MIDI CONNECTION & ENABLEMENT OF ALL INTERFACE CONTROLS
-   ========================================================================== */
-if (navigator.requestMIDIAccess) { 
-    navigator.requestMIDIAccess({ sysex: true }).then(onMIDISuccess).catch(() => {
-        navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-    });
-} else if (statusDiv) { 
-    statusDiv.innerHTML = "Error: Unsupported browser. Use Chrome or Edge on HTTPS/Localhost."; 
-    statusDiv.style.background = "#d32f2f"; 
-}
-
-function onMIDISuccess(midiAccess) {
-    const outputs = Array.from(midiAccess.outputs.values());
-    midiOutput = outputs.find(o => o.name.toLowerCase().includes('fp-30x') || o.name.toLowerCase().includes('roland')) || outputs[0] || null;
-
-    const inputs = Array.from(midiAccess.inputs.values());
-    inputs.forEach(input => {
-        if (input.name.toLowerCase().includes('fp-30x') || input.name.toLowerCase().includes('roland') || inputs.length === 1) {
-            input.onmidimessage = handleMidiInput;
-        }
-    });
-
-    if (midiOutput && statusDiv) { 
-        statusDiv.innerHTML = `Connected Hardware (Active In/Out): ${midiOutput.name}`; 
-        statusDiv.style.background = "#2e7d32"; 
-        enableControls(); 
-    } else if (statusDiv) { 
-        statusDiv.innerHTML = "Roland FP-30X disconnected. Connect via USB."; 
-        statusDiv.style.background = "#e65100"; 
-    }
-}
-
-function onMIDIFailure() { 
-    if (statusDiv) {
-        statusDiv.innerHTML = "MIDI Hardware access failed or denied by browser."; 
-        statusDiv.style.background = "#d32f2f"; 
-    }
-}
-
-/* ==========================================================================
-   ENABLE ALL INTERFACE CONTROLS ON CONNECT
-   ========================================================================== */
-function enableControls() {
-    // Enable EVERY input, select, and button across the entire document
-    document.querySelectorAll('input, select, button').forEach(el => {
-        if (el.id !== 'btnClearMonitor') {
-            el.disabled = false;
-        }
-    });
-    
-    initDrumVisualizer(); 
-    setupControllerListeners();
-}
-
-/* ==========================================================================
    PROGRAM CHANGE TRANSMISSION
    ========================================================================== */
 if (btnChangeSound) {
     btnChangeSound.addEventListener('click', () => {
-        if (!midiOutput || !soundSelect || !soundSelect.value || soundSelect.value === "") return; 
+        if (!soundSelect || !soundSelect.value || soundSelect.value === "") return; 
         if (typeof ROLAND_SOUNDS === 'undefined') return;
         
         const index = parseInt(soundSelect.value);
@@ -628,13 +587,15 @@ if (btnChangeSound) {
 
         const s = ROLAND_SOUNDS[index];
         
-        midiOutput.send([0xB0 | MIDI_CHANNEL, 0, s.cc00]); 
-        midiOutput.send([0xB0 | MIDI_CHANNEL, 32, s.cc32]); 
-        midiOutput.send([0xC0 | MIDI_CHANNEL, s.pc]);
+        if (midiOutput) {
+            midiOutput.send([0xB0 | MIDI_CHANNEL, 0, s.cc00]); 
+            midiOutput.send([0xB0 | MIDI_CHANNEL, 32, s.cc32]); 
+            midiOutput.send([0xC0 | MIDI_CHANNEL, s.pc]);
 
-        midiOutput.send([0xB0 | 0, 0, s.cc00]); 
-        midiOutput.send([0xB0 | 0, 32, s.cc32]); 
-        midiOutput.send([0xC0 | 0, s.pc]);
+            midiOutput.send([0xB0 | 0, 0, s.cc00]); 
+            midiOutput.send([0xB0 | 0, 32, s.cc32]); 
+            midiOutput.send([0xC0 | 0, s.pc]);
+        }
         
         appendOutputLog(`Prog Sent: ${s.name} [MSB:${s.cc00} LSB:${s.cc32} PC:${s.pc + 1}]`, "pb-msg");
     });
@@ -679,3 +640,101 @@ function updateDrumTable(index) {
         <tr><td><strong>SFX Set</strong></td><td>${d.sfx}</td></tr>
     `;
 }
+
+/* ==========================================================================
+   MIDI PORT ENUMERATION & CONNECTIVITY
+   ========================================================================== */
+function refreshMidiPorts() {
+    if (!navigator.requestMIDIAccess) {
+        if (statusDiv) {
+            statusDiv.innerHTML = "Error: Web MIDI API not supported in this browser. Use Chrome or Edge.";
+            statusDiv.style.background = "#d32f2f";
+        }
+        return;
+    }
+
+    navigator.requestMIDIAccess({ sysex: true }).then(access => {
+        midiAccess = access;
+        populateMidiDropdown();
+    }).catch(() => {
+        navigator.requestMIDIAccess().then(access => {
+            midiAccess = access;
+            populateMidiDropdown();
+        }).catch(onMIDIFailure);
+    });
+}
+
+function populateMidiDropdown() {
+    if (!midiAccess || !midiPortSelect) return;
+    const outputs = Array.from(midiAccess.outputs.values());
+    midiPortSelect.innerHTML = "";
+
+    if (outputs.length === 0) {
+        let opt = document.createElement('option');
+        opt.value = "";
+        opt.innerText = "No MIDI Output devices found. Connect USB MIDI...";
+        midiPortSelect.appendChild(opt);
+        if (statusDiv) {
+            statusDiv.innerHTML = "No MIDI devices connected. Please connect USB cable.";
+            statusDiv.style.background = "#e65100";
+        }
+        return;
+    }
+
+    let defaultSelectedIndex = 0;
+    outputs.forEach((out, idx) => {
+        let opt = document.createElement('option');
+        opt.value = out.id;
+        opt.innerText = `${out.name} (${out.manufacturer || 'MIDI Port'})`;
+        midiPortSelect.appendChild(opt);
+        if (out.name.toLowerCase().includes('fp-30x') || out.name.toLowerCase().includes('roland')) {
+            defaultSelectedIndex = idx;
+        }
+    });
+
+    midiPortSelect.selectedIndex = defaultSelectedIndex;
+    selectMidiOutput(outputs[defaultSelectedIndex].id);
+}
+
+function selectMidiOutput(portId) {
+    if (!midiAccess) return;
+    const outputs = Array.from(midiAccess.outputs.values());
+    midiOutput = outputs.find(o => o.id === portId) || outputs[0] || null;
+
+    const inputs = Array.from(midiAccess.inputs.values());
+    inputs.forEach(input => {
+        input.onmidimessage = handleMidiInput;
+    });
+
+    if (midiOutput && statusDiv) {
+        statusDiv.innerHTML = `Connected Hardware (Active In/Out): ${midiOutput.name}`;
+        statusDiv.style.background = "#2e7d32";
+        appendOutputLog(`Selected MIDI Output Port: ${midiOutput.name}`, "system-msg");
+    }
+}
+
+if (midiPortSelect) {
+    midiPortSelect.addEventListener('change', () => {
+        selectMidiOutput(midiPortSelect.value);
+    });
+}
+
+if (btnRefreshMidi) {
+    btnRefreshMidi.addEventListener('click', () => {
+        refreshMidiPorts();
+    });
+}
+
+function onMIDIFailure() {
+    if (statusDiv) {
+        statusDiv.innerHTML = "MIDI Hardware access failed or denied by browser.";
+        statusDiv.style.background = "#d32f2f";
+    }
+}
+
+// Initial setup on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initDrumVisualizer();
+    setupControllerListeners();
+    refreshMidiPorts();
+});
