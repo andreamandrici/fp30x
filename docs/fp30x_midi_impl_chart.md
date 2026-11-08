@@ -1,14 +1,9 @@
-| Function... | Transmitted | Recognized | Remarks |
-|-|-|-|-|
-| Basic Channel Default | 1 | 1–16 | |
-| Changed | 1–16 | 1–16 | |
-| Mode Default | Mode 3 | Mode 3 | *1 |
-| Messages | X | Mode 3,4 (M = 1) | |
-| Altered | ************** | | |
-| Note Number : | 15–113 | 0–127 | |
-| True Voice | ************** | 0–127 | |
-| Velocity Note On | O | O | |
-| Note Off | O | O | |
+|Function||Transmitted|Recognized|Remarks|
+|:---|:---|:---|:---|:---|
+|Basic Channel<br>|Default<br>Changed|1<br>1–16|1–16<br>1–16||
+|Mode|Default<br>Messages<br>Altered|Mode 3<br>X<br>**************|Mode 3<br>Mode 3,4 (M = 1)<br>|*1|
+|Note Number|<br>True Voice|15–113<br>**************|0–127<br>0–127| |
+|Velocity|Note On<br>Note Off|O<br>O|O<br>O||
 | After Touch Key’s | X | X | |
 | Channel’s | X | O | |
 | Pitch Bend | X | O | |
