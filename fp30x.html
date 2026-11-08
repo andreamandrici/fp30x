@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roland FP-30X Web Controller & Monitor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Roland FP-30X Full Hardware Controller</h1>
+    <div id="status" class="status">Waiting for MIDI connection...</div>
+    <p class="subtitle" style="text-align: center; margin-bottom: 20px; color: #00adb5;">💡 Tip: Double-click on any slider or its label to reset it to default value.</p>
+
+    <!-- INPUT MONITOR (CHANNEL 1) -->
+    <div class="panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 15px;">
+            <h2 style="border: none; margin: 0;">MIDI Monitor (Bi-directional In/Out)</h2>
+            <button id="btnClearMonitor" style="width: auto; padding: 5px 15px; margin: 0; font-size: 12px; background: #393e46;">Clear Log</button>
+        </div>
+        <div class="monitor-box" id="midiMonitorLog">
+            <div class="monitor-row system-msg">Waiting for MIDI messages from keyboard... play a key!</div>
+        </div>
+    </div>
+
+    <!-- SECTION 1: TONE & HIERARCHICAL SOUNDS -->
+    <div class="panel">
+        <h2>1. Advanced Tone Selection (Channel 4)</h2>
+        <div class="row" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; gap: 10px;">
+                <select id="macroTypeSelect" disabled>
+                    <option value="">Select Type...</option>
+                    <option value="Nativi">Native Instruments (SuperNATURAL)</option>
+                    <option value="GM2">GM2 Instruments (General MIDI 2)</option>
+                </select>
+                <select id="groupSelect" disabled>
+                    <option value="">Select Group...</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <select id="soundSelect" disabled style="flex: 2;">
+                    <option value="">Select specific instrument...</option>
+                </select>
+                <button id="btnChangeSound" disabled style="flex: 1;">Send Program Change</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: CHANNEL MIXER & EFFECTS -->
+    <div class="panel">
+        <h2>2. Channel Mixer & Effects (Volume, Ambience, Reverb Type)</h2>
+        <div class="grid-2">
+            <div>
+                <div class="slider-container" id="container_cc7">
+                    <label class="reset-trigger">Channel Volume / Mixer (CC 7): <span id="cc7_val">100</span></label>
+                    <input type="range" id="cc7" min="0" max="127" value="100" disabled>
+                </div>
+                <div class="slider-container" id="container_cc10">
+                    <label class="reset-trigger">Panpot / Stereo Position (CC 10): <span id="cc10_val">64</span></label>
+                    <input type="range" id="cc10" min="0" max="127" value="64" disabled>
+                </div>
+            </div>
+            <div>
+                <div class="slider-container" id="container_cc91">
+                    <label class="reset-trigger">Reverb Send / Ambience (CC 91): <span id="cc91_val">40</span></label>
+                    <input type="range" id="cc91" min="0" max="127" value="40" disabled>
+                </div>
+                <div class="slider-container" id="container_cc93">
+                    <label class="reset-trigger">Chorus Effect Send (CC 93): <span id="cc93_val">0</span></label>
+                    <input type="range" id="cc93" min="0" max="127" value="0" disabled>
+                </div>
+                <div class="slider-container" style="margin-top: 10px;">
+                    <label>Reverb Type / Reverb Algorithm (SysEx - GM2/Global):</label>
+                    <select id="reverbTypeSelect" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="0">Small Room (Room 1)</option>
+                        <option value="1" selected>Medium Room (Room 2)</option>
+                        <option value="2">Large Room (Room 3)</option>
+                        <option value="3">Medium Hall (Hall 1)</option>
+                        <option value="4">Large Hall (Hall 2)</option>
+                        <option value="8">Plate</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: SOUND MODELING & EXPRESSIVE DYNAMICS -->
+    <div class="panel">
+        <h2>3. Sound Modeling & Expressive Dynamics</h2>
+        <div class="grid-2">
+            <div>
+                <h3 style="font-size:13px; color:#00adb5; margin-top:0; margin-bottom:10px;">Dynamics & Filter (Envelope)</h3>
+                <div class="slider-container" id="container_cc11" style="margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;">
+                    <label class="reset-trigger">Expression Pedal / Dynamic Control (CC 11): <span id="cc11_val">127</span></label>
+                    <input type="range" id="cc11" min="0" max="127" value="127" disabled>
+                </div>
+                <div class="slider-container" id="container_cc74">
+                    <label class="reset-trigger">Sound Brightness / Cutoff (CC 74): <span id="cc74_val">64</span></label>
+                    <input type="range" id="cc74" min="0" max="127" value="64" disabled>
+                </div>
+                <div class="slider-container" id="container_cc71">
+                    <label class="reset-trigger">Filter Resonance (CC 71): <span id="cc71_val">64</span></label>
+                    <input type="range" id="cc71" min="0" max="127" value="64" disabled>
+                </div>
+                <div class="slider-container" id="container_cc73">
+                    <label class="reset-trigger">Attack Time (CC 73): <span id="cc73_val">64</span></label>
+                    <input type="range" id="cc73" min="0" max="127" value="64" disabled>
+                </div>
+                <div class="slider-container" id="container_cc75">
+                    <label class="reset-trigger">Decay Time (CC 75): <span id="cc75_val">64</span></label>
+                    <input type="range" id="cc75" min="0" max="127" value="64" disabled>
+                </div>
+                <div class="slider-container" id="container_cc72">
+                    <label class="reset-trigger">Release Time (CC 72): <span id="cc72_val">64</span></label>
+                    <input type="range" id="cc72" min="0" max="127" value="64" disabled>
+                </div>
+            </div>
+            <div>
+                <h3 style="font-size:13px; color:#00adb5; margin-top:0; margin-bottom:10px;">Modulation, LFO & Portamento</h3>
+                <div class="slider-container" id="container_cc1">
+                    <label class="reset-trigger">Modulation Wheel / Rotary Effect (CC 1): <span id="cc1_val">0</span></label>
+                    <input type="range" id="cc1" min="0" max="127" value="0" disabled>
+                </div>
+                <div class="slider-container" id="container_cc76">
+                    <label class="reset-trigger">Vibrato Rate / LFO Rate (CC 76): <span id="cc76_val">64</span></label>
+                    <input type="range" id="cc76" min="0" max="127" value="64" disabled>
+                </div>
+                <div class="slider-container" id="container_cc77">
+                    <label class="reset-trigger">Vibrato Depth / LFO Depth (CC 77): <span id="cc77_val">64</span></label>
+                    <input type="range" id="cc77" min="0" max="127" value="64" disabled>
+                </div>
+                <div class="slider-container" id="container_cc78">
+                    <label class="reset-trigger">Vibrato Delay / LFO Delay (CC 78): <span id="cc78_val">64</span></label>
+                    <input type="range" id="cc78" min="0" max="127" value="64" disabled>
+                </div>
+                <div class="slider-container" id="container_cc5" style="margin-top:15px;">
+                    <label class="reset-trigger">Portamento Time / Glide (CC 5): <span id="cc5_val">0</span></label>
+                    <input type="range" id="cc5" min="0" max="127" value="0" disabled>
+                </div>
+                <div class="slider-container" id="container_cc65" style="margin-bottom:5px;">
+                    <label class="reset-trigger">Portamento Switch (CC 65): <span id="cc65_val">OFF</span></label>
+                    <input type="checkbox" id="cc65" disabled>
+                </div>
+                <div class="slider-container" id="container_cc84">
+                    <label class="reset-trigger">Portamento Control / Note Assign (CC 84): <span id="cc84_val">0</span></label>
+                    <input type="range" id="cc84" min="0" max="127" value="0" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: PRESET MANAGEMENT & WEB SETTINGS STORAGE -->
+    <div class="panel">
+        <h2>4. Preset Management & Web Settings Storage</h2>
+        <div class="row" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="presetNameInput" placeholder="New preset name (e.g. Soft Piano Ambience 80)" style="flex: 2; padding: 10px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px;">
+            <button id="btnSavePreset" style="flex: 1;">💾 Save Preset</button>
+        </div>
+        <div class="row" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+            <select id="presetSelect" style="flex: 2;">
+                <option value="">Select a saved preset...</option>
+            </select>
+            <button id="btnLoadPreset" style="flex: 1;">📂 Load Preset</button>
+            <button id="btnDeletePreset" class="btn-danger" style="flex: 1; min-width: 100px;">🗑️ Delete</button>
+        </div>
+    </div>
+
+    <!-- SECTION 5: AUXILIARY COMMANDS & INSTRUMENT RESET -->
+    <div class="panel">
+        <h2>5. Auxiliary Commands & Instrument Reset</h2>
+        <div class="btn-group">
+            <button id="btnResetAllSliders" class="btn-warn" disabled>🔄 Reset All Sliders (FP-30X Default Values)</button>
+            <button id="btnAllSoundOff" class="btn-danger" disabled>All Sound Off (CC 120)</button>
+            <button id="btnResetControllers" class="btn-warn" disabled>Reset Controllers (CC 121)</button>
+            <button id="btnAllNotesOff" class="btn-danger" disabled>All Notes Off (CC 123)</button>
+        </div>
+    </div>
+
+    <!-- SECTION 6: DRUM VISUALIZER PANELS -->
+    <div id="drumVisualizer" class="panel hidden">
+        <h2>6. Selected Drum Kit Key Map</h2>
+        <p class="subtitle">Check physical key assignments for sampled percussion on your FP-30X</p>
+        <select id="drumKeySelect" disabled></select>
+        <div class="table-responsive">
+            <table id="drumTable">
+                <thead>
+                    <tr><th>Drum Set</th><th>Assigned Hardware Instrument</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="sounds-config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

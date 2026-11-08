@@ -1,12 +1,12 @@
 /* ==========================================================================
-   ROLAND FP-30X WEB CONTROLLER - APP.JS (VERSIONE ROBUSTA CON SYSEX SAFE)
+   ROLAND FP-30X WEB CONTROLLER - APP_EN.JS (ENGLISH VERSION)
    ========================================================================== */
 
 /* ==========================================================================
-   BLOCCO STATO GLOBALE E DICHIARAZIONE CONTROLLER CONTINUI (CC)
+   GLOBAL STATE & CONTINUOUS CONTROLLER (CC) DECLARATIONS
    ========================================================================== */
 let midiOutput = null;
-const MIDI_CHANNEL = 3; // Canale MIDI 4 hardware (0xB3 per i CC)
+const MIDI_CHANNEL = 3; // Hardware Channel 4 (0xB3 for CC)
 
 const CONTROLLERS = [
     { id: 'cc1',  num: 1,  default: 0 },
@@ -14,7 +14,7 @@ const CONTROLLERS = [
     { id: 'cc7',  num: 7,  default: 100 },
     { id: 'cc10', num: 10, default: 64 },
     { id: 'cc11', num: 11, default: 127 },
-    { id: 'cc65', num: 65, default: 0 },   // Interruttore Portamento (OFF = 0, ON = 127)
+    { id: 'cc65', num: 65, default: 0 },   // Portamento Switch (OFF = 0, ON = 127)
     { id: 'cc71', num: 71, default: 64 },
     { id: 'cc72', num: 72, default: 64 },
     { id: 'cc73', num: 73, default: 64 },
@@ -24,12 +24,12 @@ const CONTROLLERS = [
     { id: 'cc77', num: 77, default: 64 },
     { id: 'cc78', num: 78, default: 64 },
     { id: 'cc84', num: 84, default: 0 },
-    { id: 'cc91', num: 91, default: 40 },  // Mandata Riverbero / Ambience
-    { id: 'cc93', num: 93, default: 0 }   // Mandata Chorus
+    { id: 'cc91', num: 91, default: 40 },  // Reverb Send / Ambience
+    { id: 'cc93', num: 93, default: 0 }   // Chorus Send
 ];
 
 /* ==========================================================================
-   BLOCCO RIFERIMENTI AGLI ELEMENTI DEL DOM HTML
+   DOM ELEMENT REFERENCES
    ========================================================================== */
 const statusDiv = document.getElementById('status');
 const macroTypeSelect = document.getElementById('macroTypeSelect');
@@ -56,7 +56,7 @@ const btnLoadPreset = document.getElementById('btnLoadPreset');
 const btnDeletePreset = document.getElementById('btnDeletePreset');
 
 /* ==========================================================================
-   BLOCCO TRADUZIONE CODICI NOTA IN LETTERE ALFABETICHE
+   NOTE NUMBER TO LETTER CONVERSION
    ========================================================================== */
 const NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
@@ -66,7 +66,7 @@ function getNoteName(noteNumber) {
 }
 
 /* ==========================================================================
-   BLOCCO MONITOR MIDI IN INGRESSO
+   INCOMING MIDI MONITOR (INPUT DECODING)
    ========================================================================== */
 function handleMidiInput(event) {
     const data = event.data;
@@ -98,20 +98,20 @@ function handleMidiInput(event) {
             logText = `[${timestamp}] IN (Ch.${channel}) | Note Off: ${noteOffName} (KeyN: ${data[1]})`;
             cssClass = "note-off";
             break;
-        case 0xB0: // Control Change da hardware
+        case 0xB0: // Control Change from hardware
             if (data.length < 3) return;
-            logText = `[${timestamp}] IN (Ch.${channel}) | CC Recv : Controller ${data[1]}, Valore: ${data[2]}`;
+            logText = `[${timestamp}] IN (Ch.${channel}) | CC Recv : Controller ${data[1]}, Value: ${data[2]}`;
             cssClass = "cc-msg";
             break;
-        case 0xC0: // Program Change da hardware
+        case 0xC0: // Program Change from hardware
             if (data.length < 2) return;
-            logText = `[${timestamp}] IN (Ch.${channel}) | Prog Recv: Strumento ID ${data[1] + 1} (PC: ${data[1]})`;
+            logText = `[${timestamp}] IN (Ch.${channel}) | Prog Recv: Instrument ID ${data[1] + 1} (PC: ${data[1]})`;
             cssClass = "pb-msg";
             break;
         case 0xE0: // Pitch Bend
             if (data.length < 3) return;
             const bend = data[1] | (data[2] << 7);
-            logText = `[${timestamp}] IN (Ch.${channel}) | PitchBend: Valore ${bend}`;
+            logText = `[${timestamp}] IN (Ch.${channel}) | PitchBend: Value ${bend}`;
             cssClass = "pb-msg";
             break;
         default: 
@@ -131,13 +131,13 @@ function handleMidiInput(event) {
 }
 
 /* ==========================================================================
-   BLOCCO SELEZIONE MACRO TIPO E GRUPPO NEI MENU A CASCATA REATTIVI
+   MACRO TYPE & GROUP SELECTION DROPDOWNS
    ========================================================================== */
 if (macroTypeSelect) {
     macroTypeSelect.addEventListener('change', () => {
         const selectedType = macroTypeSelect.value;
-        groupSelect.innerHTML = '<option value="">Seleziona Gruppo...</option>';
-        soundSelect.innerHTML = '<option value="">Seleziona lo strumento specifico...</option>';
+        groupSelect.innerHTML = '<option value="">Select Group...</option>';
+        soundSelect.innerHTML = '<option value="">Select specific instrument...</option>';
         soundSelect.disabled = true;
         if (!selectedType) { groupSelect.disabled = true; return; }
         
@@ -155,7 +155,7 @@ if (groupSelect) {
     groupSelect.addEventListener('change', () => {
         const selectedType = macroTypeSelect.value; 
         const selectedGroup = groupSelect.value;
-        soundSelect.innerHTML = '<option value="">Seleziona lo strumento specifico...</option>';
+        soundSelect.innerHTML = '<option value="">Select specific instrument...</option>';
         if (!selectedGroup) { soundSelect.disabled = true; return; }
         
         if (typeof ROLAND_SOUNDS !== 'undefined') {
@@ -185,7 +185,7 @@ if (soundSelect) {
 }
 
 /* ==========================================================================
-   BLOCCO SELEZIONE TIPO DI RIVERBERO (SYSEX GM2/GLOBAL)
+   REVERB TYPE SELECTION (SYSEX GM2/GLOBAL)
    ========================================================================== */
 if (reverbTypeSelect) {
     reverbTypeSelect.addEventListener('change', () => {
@@ -203,7 +203,7 @@ if (reverbTypeSelect) {
 }
 
 /* ==========================================================================
-   BLOCCO GESTIONE LOG DI OUTPUT
+   OUTPUT LOG MANAGEMENT
    ========================================================================== */
 function appendOutputLog(text, cssClass) {
     if (!midiMonitorLog) return;
@@ -219,31 +219,30 @@ function appendOutputLog(text, cssClass) {
 }
 
 /* ==========================================================================
-   BLOCCO LOGICA TRASMISSIONE EVENTI MIDI CC E RESET AL VALORE DI DEFAULT
+   MIDI CC TRANSMISSION LOGIC & RESET TO DEFAULT
    ========================================================================== */
 function sendCC(ccNum, value) {
     if (!midiOutput) return;
     
-    // Per i controlli universali (Volume CC7, Reverb CC91, Chorus CC93), invia su TUTTI i canali 1..16
+    // Universal controls (Volume CC7, Reverb CC91, Chorus CC93) send to ALL channels 1..16
     if (ccNum === 7 || ccNum === 91 || ccNum === 93) {
         for (let ch = 0; ch < 16; ch++) {
             midiOutput.send([0xB0 | ch, ccNum, value]);
         }
         
-        // Se è CC 91 (Riverbero/Ambience), tenta anche l'invio SysEx Reverb Level in sicurezza
         if (ccNum === 91) {
             try {
-                // Universal Realtime SysEx - Reverb Level (Time/Depth): F0 7F 7F 04 05 01 01 01 01 01 01 vv F7
+                // Universal Realtime SysEx - Reverb Level: F0 7F 7F 04 05 01 01 01 01 01 01 vv F7
                 midiOutput.send([0xF0, 0x7F, 0x7F, 0x04, 0x05, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, value, 0xF7]);
             } catch(e) {}
         }
     } else {
-        // Invio standard sul Canale 4 (MIDI_CHANNEL = 3) e Canale 1 locale per risposta ottimale
+        // Standard send on Channel 4 (MIDI_CHANNEL = 3) and Channel 1 for local keyboard response
         midiOutput.send([0xB0 | MIDI_CHANNEL, ccNum, value]);
         midiOutput.send([0xB0 | 0, ccNum, value]);
     }
 
-    appendOutputLog(`CC Sent  : Controller ${ccNum}, Valore: ${value}`, "cc-msg");
+    appendOutputLog(`CC Sent  : Controller ${ccNum}, Value: ${value}`, "cc-msg");
 }
 
 function resetToDefault(cc) {
@@ -263,7 +262,7 @@ function resetToDefault(cc) {
 }
 
 /* ==========================================================================
-   BLOCCO ASCOLTATORI E CONTROLLO SLIDER (RANGE E CHECKBOX)
+   SLIDER & CONTROL LISTENERS (RANGE AND CHECKBOX)
    ========================================================================== */
 function setupControllerListeners() {
     CONTROLLERS.forEach(cc => {
@@ -303,14 +302,14 @@ function setupControllerListeners() {
 }
 
 /* ==========================================================================
-   BLOCCO PULSANTI AUSILIARI & RESET TOTALE SLIDER
+   AUXILIARY BUTTONS & TOTAL SLIDER RESET
    ========================================================================== */
 if (btnResetAllSliders) {
     btnResetAllSliders.addEventListener('click', () => {
         CONTROLLERS.forEach(cc => {
             resetToDefault(cc);
         });
-        appendOutputLog("Ripristinati tutti gli slider ai valori default FP-30X", "system-msg");
+        appendOutputLog("All sliders reset to FP-30X default values", "system-msg");
     });
 }
 if (btnAllSoundOff) {
@@ -325,17 +324,17 @@ if (btnAllNotesOff) {
 if (btnClearMonitor) {
     btnClearMonitor.addEventListener('click', () => {
         if (midiMonitorLog) {
-            midiMonitorLog.innerHTML = '<div class="monitor-row system-msg">Log svuotato. In attesa di messaggi...</div>';
+            midiMonitorLog.innerHTML = '<div class="monitor-row system-msg">Log cleared. Waiting for messages...</div>';
         }
     });
 }
 
 /* ==========================================================================
-   BLOCCO GESTIONE PRESET SALVATI CON NOME (LOCALSTORAGE)
+   NAMED PRESET MANAGEMENT (LOCALSTORAGE)
    ========================================================================== */
 function getSavedPresets() {
     try {
-        return JSON.parse(localStorage.getItem('fp30x_presets') || '{}');
+        return JSON.parse(localStorage.getItem('fp30x_presets_en') || '{}');
     } catch(e) {
         return {};
     }
@@ -344,7 +343,7 @@ function getSavedPresets() {
 function updatePresetDropdown() {
     if (!presetSelect) return;
     const presets = getSavedPresets();
-    presetSelect.innerHTML = '<option value="">Seleziona un preset salvato...</option>';
+    presetSelect.innerHTML = '<option value="">Select a saved preset...</option>';
     Object.keys(presets).forEach(name => {
         let opt = document.createElement('option');
         opt.value = name;
@@ -357,7 +356,7 @@ if (btnSavePreset) {
     btnSavePreset.addEventListener('click', () => {
         const name = presetNameInput ? presetNameInput.value.trim() : "";
         if (!name) {
-            alert("Inserisci un nome per il preset!");
+            alert("Please enter a name for the preset!");
             return;
         }
         const state = {
@@ -375,10 +374,10 @@ if (btnSavePreset) {
         });
         const presets = getSavedPresets();
         presets[name] = state;
-        localStorage.setItem('fp30x_presets', JSON.stringify(presets));
+        localStorage.setItem('fp30x_presets_en', JSON.stringify(presets));
         if (presetNameInput) presetNameInput.value = "";
         updatePresetDropdown();
-        appendOutputLog(`Preset salvato: "${name}"`, "system-msg");
+        appendOutputLog(`Preset saved: "${name}"`, "system-msg");
     });
 }
 
@@ -390,7 +389,7 @@ if (btnLoadPreset) {
         const state = presets[name];
         if (!state) return;
 
-        // Ripristina timbro
+        // Restore Tone Selection
         if (state.macroType && macroTypeSelect) {
             macroTypeSelect.value = state.macroType;
             macroTypeSelect.dispatchEvent(new Event('change'));
@@ -405,13 +404,13 @@ if (btnLoadPreset) {
             }
         }
 
-        // Ripristina Reverb Type
+        // Restore Reverb Type
         if (state.reverbType && reverbTypeSelect) {
             reverbTypeSelect.value = state.reverbType;
             reverbTypeSelect.dispatchEvent(new Event('change'));
         }
 
-        // Ripristina Controllers
+        // Restore Controllers
         if (state.controllers) {
             CONTROLLERS.forEach(cc => {
                 if (state.controllers[cc.id] !== undefined) {
@@ -431,7 +430,7 @@ if (btnLoadPreset) {
                 }
             });
         }
-        appendOutputLog(`Preset caricato: "${name}"`, "system-msg");
+        appendOutputLog(`Preset loaded: "${name}"`, "system-msg");
     });
 }
 
@@ -441,23 +440,23 @@ if (btnDeletePreset) {
         if (!name) return;
         const presets = getSavedPresets();
         delete presets[name];
-        localStorage.setItem('fp30x_presets', JSON.stringify(presets));
+        localStorage.setItem('fp30x_presets_en', JSON.stringify(presets));
         updatePresetDropdown();
-        appendOutputLog(`Preset eliminato: "${name}"`, "system-msg");
+        appendOutputLog(`Preset deleted: "${name}"`, "system-msg");
     });
 }
 
 updatePresetDropdown();
 
 /* ==========================================================================
-   BLOCCO APERTURA CONNESSIONE WEB MIDI API (CON RICHESTA SYSEX CON FALLBACK)
+   WEB MIDI API CONNECTION (WITH SYSEX REQUEST AND FALLBACK)
    ========================================================================== */
 if (navigator.requestMIDIAccess) { 
     navigator.requestMIDIAccess({ sysex: true }).then(onMIDISuccess).catch(() => {
         navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
     });
 } else if (statusDiv) { 
-    statusDiv.innerHTML = "Errore: Browser non supportato. Usa Chrome o Edge su connessione HTTPS/Localhost."; 
+    statusDiv.innerHTML = "Error: Unsupported browser. Use Chrome or Edge on HTTPS/Localhost."; 
     statusDiv.style.background = "#d32f2f"; 
 }
 
@@ -473,24 +472,24 @@ function onMIDISuccess(midiAccess) {
     });
 
     if (midiOutput && statusDiv) { 
-        statusDiv.innerHTML = `Connesso Hardware (In/Out Attivo): ${midiOutput.name}`; 
+        statusDiv.innerHTML = `Connected Hardware (Active In/Out): ${midiOutput.name}`; 
         statusDiv.style.background = "#2e7d32"; 
         enableControls(); 
     } else if (statusDiv) { 
-        statusDiv.innerHTML = "Roland FP-30X scollegato. Connettilo via USB."; 
+        statusDiv.innerHTML = "Roland FP-30X disconnected. Connect via USB."; 
         statusDiv.style.background = "#e65100"; 
     }
 }
 
 function onMIDIFailure() { 
     if (statusDiv) {
-        statusDiv.innerHTML = "Accesso MIDI Hardware fallito o negato dal browser."; 
+        statusDiv.innerHTML = "MIDI Hardware access failed or denied by browser."; 
         statusDiv.style.background = "#d32f2f"; 
     }
 }
 
 /* ==========================================================================
-   BLOCCO ABILITAZIONE GENERALE INTERFACCIA GRAFICA
+   GENERAL GRAPHICAL INTERFACE ENABLEMENT
    ========================================================================== */
 function enableControls() {
     if (macroTypeSelect) macroTypeSelect.disabled = false; 
@@ -513,7 +512,7 @@ function enableControls() {
 }
 
 /* ==========================================================================
-   BLOCCO INVIO PROGRAM CHANGE
+   PROGRAM CHANGE TRANSMISSION
    ========================================================================== */
 if (btnChangeSound) {
     btnChangeSound.addEventListener('click', () => {
@@ -525,7 +524,7 @@ if (btnChangeSound) {
 
         const s = ROLAND_SOUNDS[index];
         
-        // Invio Bank Select (CC00 / CC32) e Program Change (PC) sia su Canale 4 che su Canale 1
+        // Send Bank Select (CC00 / CC32) & Program Change (PC) to both Channel 4 and Channel 1
         midiOutput.send([0xB0 | MIDI_CHANNEL, 0, s.cc00]); 
         midiOutput.send([0xB0 | MIDI_CHANNEL, 32, s.cc32]); 
         midiOutput.send([0xC0 | MIDI_CHANNEL, s.pc]);
@@ -539,7 +538,7 @@ if (btnChangeSound) {
 }
 
 /* ==========================================================================
-   BLOCCO TABELLA DRUM KIT
+   DRUM KIT TABLE BUILDER
    ========================================================================== */
 function initDrumVisualizer() {
     if (!drumKeySelect) return;
@@ -548,7 +547,7 @@ function initDrumVisualizer() {
         DRUM_KEY_MAP.forEach((item, index) => {
             let opt = document.createElement('option'); 
             opt.value = index;
-            opt.innerHTML = `Tasto ${item.key} (KeyN: ${item.name})`; 
+            opt.innerHTML = `Key ${item.key} (KeyN: ${item.name})`; 
             drumKeySelect.appendChild(opt);
         });
         updateDrumTable(0);
