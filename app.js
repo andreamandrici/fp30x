@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ROLAND FP-30X WEB CONTROLLER - APP_EN.JS (ENGLISH VERSION)
+   ROLAND FP-30X WEB CONTROLLER - APP.JS (FULL ENGLISH VERSION WITH METRONOME & SONGS)
    ========================================================================== */
 
 /* ==========================================================================
@@ -54,6 +54,30 @@ const btnSavePreset = document.getElementById('btnSavePreset');
 const presetSelect = document.getElementById('presetSelect');
 const btnLoadPreset = document.getElementById('btnLoadPreset');
 const btnDeletePreset = document.getElementById('btnDeletePreset');
+
+// METRONOME CONTROLS
+const metroToggleBtn = document.getElementById('metroToggleBtn');
+const metroBpmInput = document.getElementById('metroBpmInput');
+const metroBpmVal = document.getElementById('metroBpmVal');
+const metroVolInput = document.getElementById('metroVolInput');
+const metroVolVal = document.getElementById('metroVolVal');
+const metroBeatSelect = document.getElementById('metroBeatSelect');
+const metroToneSelect = document.getElementById('metroToneSelect');
+const metroPatternSelect = document.getElementById('metroPatternSelect');
+
+// SONG PLAYER CONTROLS
+const songPlayBtn = document.getElementById('songPlayBtn');
+const songStopBtn = document.getElementById('songStopBtn');
+const songVolInput = document.getElementById('songVolInput');
+const songVolVal = document.getElementById('songVolVal');
+const countInSelect = document.getElementById('countInSelect');
+
+const usbPrevBtn = document.getElementById('usbPrevBtn');
+const usbPlayBtn = document.getElementById('usbPlayBtn');
+const usbNextBtn = document.getElementById('usbNextBtn');
+
+let isMetronomeRunning = false;
+let isSongPlaying = false;
 
 /* ==========================================================================
    NOTE NUMBER TO LETTER CONVERSION
@@ -302,6 +326,167 @@ function setupControllerListeners() {
 }
 
 /* ==========================================================================
+   FULL METRONOME CONTROLS IMPLEMENTATION
+   ========================================================================== */
+if (metroToggleBtn) {
+    metroToggleBtn.addEventListener('click', () => {
+        if (!midiOutput) return;
+        isMetronomeRunning = !isMetronomeRunning;
+        metroToggleBtn.innerText = isMetronomeRunning ? "⏹️ Stop Metronome" : "⏱️ Start Metronome";
+        metroToggleBtn.className = isMetronomeRunning ? "btn-danger" : "btn-warn";
+        
+        try {
+            const val = isMetronomeRunning ? 0x01 : 0x00;
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x00, 0x01, val, 0xF7]);
+        } catch(e) {}
+        
+        appendOutputLog(`Metronome State: ${isMetronomeRunning ? "STARTED" : "STOPPED"}`, "system-msg");
+    });
+}
+
+if (metroBpmInput) {
+    metroBpmInput.addEventListener('input', () => {
+        const bpm = parseInt(metroBpmInput.value);
+        if (metroBpmVal) metroBpmVal.innerText = bpm;
+        if (!midiOutput) return;
+        
+        try {
+            const msb = (bpm >> 8) & 0x0F;
+            const lsb = bpm & 0xFF;
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x00, 0x02, msb, lsb, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`Metronome Tempo: ${bpm} BPM`, "cc-msg");
+    });
+}
+
+if (metroVolInput) {
+    metroVolInput.addEventListener('input', () => {
+        const vol = parseInt(metroVolInput.value);
+        if (metroVolVal) metroVolVal.innerText = vol;
+        if (!midiOutput) return;
+        
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x00, 0x03, vol, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`Metronome Volume: ${vol}/10`, "cc-msg");
+    });
+}
+
+if (metroBeatSelect) {
+    metroBeatSelect.addEventListener('change', () => {
+        const beat = parseInt(metroBeatSelect.value);
+        if (!midiOutput) return;
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x00, 0x04, beat, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`Metronome Beat/Time Signature: ${metroBeatSelect.options[metroBeatSelect.selectedIndex].text}`, "cc-msg");
+    });
+}
+
+if (metroToneSelect) {
+    metroToneSelect.addEventListener('change', () => {
+        const tone = parseInt(metroToneSelect.value);
+        if (!midiOutput) return;
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x00, 0x05, tone, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`Metronome Click Tone: ${metroToneSelect.options[metroToneSelect.selectedIndex].text}`, "cc-msg");
+    });
+}
+
+if (metroPatternSelect) {
+    metroPatternSelect.addEventListener('change', () => {
+        const pat = parseInt(metroPatternSelect.value);
+        if (!midiOutput) return;
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x00, 0x06, pat, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`Metronome Subdivision Pattern: ${metroPatternSelect.options[metroPatternSelect.selectedIndex].text}`, "cc-msg");
+    });
+}
+
+/* ==========================================================================
+   SONG PLAYER & USB MEDIA NAVIGATION IMPLEMENTATION
+   ========================================================================== */
+if (songPlayBtn) {
+    songPlayBtn.addEventListener('click', () => {
+        if (!midiOutput) return;
+        isSongPlaying = !isSongPlaying;
+        songPlayBtn.innerText = isSongPlaying ? "⏸️ Pause Song" : "▶️ Play Song";
+        if (isSongPlaying) {
+            midiOutput.send([0xFA]); // MIDI Realtime Start
+        } else {
+            midiOutput.send([0xFC]); // MIDI Realtime Stop
+        }
+        appendOutputLog(`Song Transport: ${isSongPlaying ? "PLAYING" : "PAUSED"}`, "system-msg");
+    });
+}
+
+if (songStopBtn) {
+    songStopBtn.addEventListener('click', () => {
+        if (!midiOutput) return;
+        isSongPlaying = false;
+        if (songPlayBtn) songPlayBtn.innerText = "▶️ Play Song";
+        midiOutput.send([0xFC]); // MIDI Realtime Stop
+        midiOutput.send([0xF2, 0x00, 0x00]); // Song Position Pointer Reset
+        appendOutputLog(`Song Transport: STOPPED & REWOUND TO START`, "system-msg");
+    });
+}
+
+if (songVolInput) {
+    songVolInput.addEventListener('input', () => {
+        const vol = parseInt(songVolInput.value);
+        if (songVolVal) songVolVal.innerText = vol;
+        if (!midiOutput) return;
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x01, 0x00, vol, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`Song Playback Volume: ${vol}/10`, "cc-msg");
+    });
+}
+
+if (countInSelect) {
+    countInSelect.addEventListener('change', () => {
+        const cnt = parseInt(countInSelect.value);
+        if (!midiOutput) return;
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x01, 0x01, cnt, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`Count-In Setup: ${countInSelect.options[countInSelect.selectedIndex].text}`, "cc-msg");
+    });
+}
+
+if (usbPrevBtn) {
+    usbPrevBtn.addEventListener('click', () => {
+        if (!midiOutput) return;
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x02, 0x01, 0x00, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`USB Media Navigation: PREVIOUS TRACK`, "pb-msg");
+    });
+}
+
+if (usbPlayBtn) {
+    usbPlayBtn.addEventListener('click', () => {
+        if (!midiOutput) return;
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x02, 0x00, 0x01, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`USB Media Navigation: PLAY / PAUSE USB SONG`, "pb-msg");
+    });
+}
+
+if (usbNextBtn) {
+    usbNextBtn.addEventListener('click', () => {
+        if (!midiOutput) return;
+        try {
+            midiOutput.send([0xF0, 0x41, 0x10, 0x00, 0x00, 0x00, 0x3B, 0x12, 0x00, 0x00, 0x02, 0x02, 0x00, 0xF7]);
+        } catch(e) {}
+        appendOutputLog(`USB Media Navigation: NEXT TRACK`, "pb-msg");
+    });
+}
+
+/* ==========================================================================
    AUXILIARY BUTTONS & TOTAL SLIDER RESET
    ========================================================================== */
 if (btnResetAllSliders) {
@@ -506,6 +691,24 @@ function enableControls() {
     if (btnAllSoundOff) btnAllSoundOff.disabled = false; 
     if (btnResetControllers) btnResetControllers.disabled = false; 
     if (btnAllNotesOff) btnAllNotesOff.disabled = false;
+
+    // Enable Metronome Controls
+    if (metroToggleBtn) metroToggleBtn.disabled = false;
+    if (metroBpmInput) metroBpmInput.disabled = false;
+    if (metroVolInput) metroVolInput.disabled = false;
+    if (metroBeatSelect) metroBeatSelect.disabled = false;
+    if (metroToneSelect) metroToneSelect.disabled = false;
+    if (metroPatternSelect) metroPatternSelect.disabled = false;
+
+    // Enable Song Controls
+    if (songPlayBtn) songPlayBtn.disabled = false;
+    if (songStopBtn) songStopBtn.disabled = false;
+    if (songVolInput) songVolInput.disabled = false;
+    if (countInSelect) countInSelect.disabled = false;
+
+    if (usbPrevBtn) usbPrevBtn.disabled = false;
+    if (usbPlayBtn) usbPlayBtn.disabled = false;
+    if (usbNextBtn) usbNextBtn.disabled = false;
     
     initDrumVisualizer(); 
     setupControllerListeners();
