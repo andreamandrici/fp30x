@@ -11,13 +11,5 @@
 |System Exclusive||O|O||
 |System Common|Song Position<br>Song Select<br>Tune Request|X<br>X<br>X|X<br>X<br>X| |
 |System Real Time|Clock<br>Commands|X<br>X|X<br>X||
-|Aux Messages||All Sound Off | X | O | |
-| : Reset All Controllers | X | O | |
-| : Local On/Off | O | X | |
-| : All Notes Off | X | O (123–127) | |
-| : Active Sensing | X | X | |
-| : System Reset | X | X | |
-|-|-|-|-|
-
-| Notes | *1 Only M=1 is supported |
-|-|-|
+|Aux Messages|All Sound Off<br>Reset All Controllers<br>Local On/Off<br>All Notes Off<br>Active Sensing<br>System Reset|X<br>X<br>0<br>X<br>X<br>X||0<br>O (123–127)<br>X<br>0<br>X<br>X||
+|Notes| *1 Only M=1 is supported|
