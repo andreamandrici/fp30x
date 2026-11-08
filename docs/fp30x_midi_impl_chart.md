@@ -4,11 +4,11 @@
 |Mode|Default<br>Messages<br>Altered|Mode 3<br>X<br>**************|Mode 3<br>Mode 3,4 (M = 1)<br>|*1|
 |Note Number|<br>True Voice|15–113<br>**************|0–127<br>0–127| |
 |Velocity|Note On<br>Note Off|O<br>O|O<br>O||
-| After Touch Key’s | X | X | |
-| Channel’s | X | O | |
-| Pitch Bend | X | O | |
-| Control Change 0,32 | O | O | Bank select |
-| 1 | X | O | Modulation |
+|After Touch|Key’s<br>Channel’s|X<br>X|X<br>O||
+|Pitch Bend||X|O||
+|Control Change|0,32<br>1<br>5<br>6,38<br>7<br>10<br>11<br>64<br>65<br>66<br>67<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>84<br>91<br>93<br>100,101|0<br>X<br>X<br>X<br>X<br>X<br>X<br>0<br>X<br>0<br>0<br>X<br>X<br>X<br>X<br>X<br>X<br>X<br>X<br>X<br>0<br>X<br>X|||
+|O|O|Bank select|
+X | O | Modulation |
 | 5 | X | O | Portamento time |
 | 6,38 | X | O | Data entry |
 | 7 | X | O | Volume |
