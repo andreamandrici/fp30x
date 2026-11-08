@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roland FP-30X Web Controller & Monitor</title>
+    <title>Roland FP-30X Full Controller & SysEx Companion</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>Roland FP-30X Full Hardware Controller</h1>
+    <h1>Roland FP-30X Full Controller & SysEx Companion</h1>
     <div id="status" class="status">Waiting for MIDI connection...</div>
     <p class="subtitle" style="text-align: center; margin-bottom: 20px; color: #00adb5;">💡 Tip: Double-click on any slider or its label to reset it to default value.</p>
 
-    <!-- INPUT MONITOR (CHANNEL 1) -->
+    <!-- INPUT MONITOR -->
     <div class="panel">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 15px;">
-            <h2 style="border: none; margin: 0;">MIDI Monitor (Bi-directional In/Out)</h2>
+            <h2 style="border: none; margin: 0;">MIDI Monitor (Bi-directional In/Out Log)</h2>
             <button id="btnClearMonitor" style="width: auto; padding: 5px 15px; margin: 0; font-size: 12px; background: #393e46;">Clear Log</button>
         </div>
         <div class="monitor-box" id="midiMonitorLog">
-            <div class="monitor-row system-msg">Waiting for MIDI messages from keyboard... play a key!</div>
+            <div class="monitor-row system-msg">Waiting for MIDI messages... play a key on your Roland FP-30X!</div>
         </div>
     </div>
 
-    <!-- SECTION 1: TONE & HIERARCHICAL SOUNDS -->
+    <!-- SECTION 1: TONE SELECTION -->
     <div class="panel">
-        <h2>1. Advanced Tone Selection (Channel 4)</h2>
+        <h2>1. Advanced Tone Selection (Channel 4 & 1)</h2>
         <div class="row" style="display: flex; flex-direction: column; gap: 10px;">
             <div style="display: flex; gap: 10px;">
                 <select id="macroTypeSelect" disabled>
@@ -49,7 +49,7 @@
 
     <!-- SECTION 2: CHANNEL MIXER & EFFECTS -->
     <div class="panel">
-        <h2>2. Channel Mixer & Effects (Volume, Ambience, Reverb Type)</h2>
+        <h2>2. Channel Mixer & Reverb Effects</h2>
         <div class="grid-2">
             <div>
                 <div class="slider-container" id="container_cc7">
@@ -63,15 +63,15 @@
             </div>
             <div>
                 <div class="slider-container" id="container_cc91">
-                    <label class="reset-trigger">Reverb Send / Ambience (CC 91): <span id="cc91_val">40</span></label>
+                    <label class="reset-trigger">Reverb Send / Ambience (CC 91 All Channels): <span id="cc91_val">40</span></label>
                     <input type="range" id="cc91" min="0" max="127" value="40" disabled>
                 </div>
                 <div class="slider-container" id="container_cc93">
-                    <label class="reset-trigger">Chorus Effect Send (CC 93): <span id="cc93_val">0</span></label>
+                    <label class="reset-trigger">Chorus Effect Send (CC 93 All Channels): <span id="cc93_val">0</span></label>
                     <input type="range" id="cc93" min="0" max="127" value="0" disabled>
                 </div>
                 <div class="slider-container" style="margin-top: 10px;">
-                    <label>Reverb Type / Reverb Algorithm (SysEx - GM2/Global):</label>
+                    <label>Reverb Type / Reverb Algorithm (SysEx GM2/Global):</label>
                     <select id="reverbTypeSelect" disabled style="padding: 8px; font-size: 13px;">
                         <option value="0">Small Room (Room 1)</option>
                         <option value="1" selected>Medium Room (Room 2)</option>
@@ -85,18 +85,18 @@
         </div>
     </div>
 
-    <!-- SECTION 3: SOUND MODELING & EXPRESSIVE DYNAMICS -->
+    <!-- SECTION 3: SOUND MODELING -->
     <div class="panel">
-        <h2>3. Sound Modeling & Expressive Dynamics</h2>
+        <h2>3. Sound Modeling & Expressive Envelope</h2>
         <div class="grid-2">
             <div>
-                <h3 style="font-size:13px; color:#00adb5; margin-top:0; margin-bottom:10px;">Dynamics & Filter (Envelope)</h3>
+                <h3 style="font-size:13px; color:#00adb5; margin-top:0; margin-bottom:10px;">Dynamics & Filter</h3>
                 <div class="slider-container" id="container_cc11" style="margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;">
-                    <label class="reset-trigger">Expression Pedal / Dynamic Control (CC 11): <span id="cc11_val">127</span></label>
+                    <label class="reset-trigger">Expression Pedal (CC 11): <span id="cc11_val">127</span></label>
                     <input type="range" id="cc11" min="0" max="127" value="127" disabled>
                 </div>
                 <div class="slider-container" id="container_cc74">
-                    <label class="reset-trigger">Sound Brightness / Cutoff (CC 74): <span id="cc74_val">64</span></label>
+                    <label class="reset-trigger">Cutoff Frequency (CC 74): <span id="cc74_val">64</span></label>
                     <input type="range" id="cc74" min="0" max="127" value="64" disabled>
                 </div>
                 <div class="slider-container" id="container_cc71">
@@ -119,19 +119,19 @@
             <div>
                 <h3 style="font-size:13px; color:#00adb5; margin-top:0; margin-bottom:10px;">Modulation, LFO & Portamento</h3>
                 <div class="slider-container" id="container_cc1">
-                    <label class="reset-trigger">Modulation Wheel / Rotary Effect (CC 1): <span id="cc1_val">0</span></label>
+                    <label class="reset-trigger">Modulation Wheel / Rotary (CC 1): <span id="cc1_val">0</span></label>
                     <input type="range" id="cc1" min="0" max="127" value="0" disabled>
                 </div>
                 <div class="slider-container" id="container_cc76">
-                    <label class="reset-trigger">Vibrato Rate / LFO Rate (CC 76): <span id="cc76_val">64</span></label>
+                    <label class="reset-trigger">Vibrato Rate (CC 76): <span id="cc76_val">64</span></label>
                     <input type="range" id="cc76" min="0" max="127" value="64" disabled>
                 </div>
                 <div class="slider-container" id="container_cc77">
-                    <label class="reset-trigger">Vibrato Depth / LFO Depth (CC 77): <span id="cc77_val">64</span></label>
+                    <label class="reset-trigger">Vibrato Depth (CC 77): <span id="cc77_val">64</span></label>
                     <input type="range" id="cc77" min="0" max="127" value="64" disabled>
                 </div>
                 <div class="slider-container" id="container_cc78">
-                    <label class="reset-trigger">Vibrato Delay / LFO Delay (CC 78): <span id="cc78_val">64</span></label>
+                    <label class="reset-trigger">Vibrato Delay (CC 78): <span id="cc78_val">64</span></label>
                     <input type="range" id="cc78" min="0" max="127" value="64" disabled>
                 </div>
                 <div class="slider-container" id="container_cc5" style="margin-top:15px;">
@@ -143,16 +143,154 @@
                     <input type="checkbox" id="cc65" disabled>
                 </div>
                 <div class="slider-container" id="container_cc84">
-                    <label class="reset-trigger">Portamento Control / Note Assign (CC 84): <span id="cc84_val">0</span></label>
+                    <label class="reset-trigger">Portamento Note Control (CC 84): <span id="cc84_val">0</span></label>
                     <input type="range" id="cc84" min="0" max="127" value="0" disabled>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SECTION 4: PRESET MANAGEMENT & WEB SETTINGS STORAGE -->
+    <!-- SECTION 4: METRONOME CONTROL (ROLAND SYSEX DT1 & HARDWARE) -->
     <div class="panel">
-        <h2>4. Preset Management & Web Settings Storage</h2>
+        <h2>4. Full Metronome Control (Roland DT1 SysEx & Hardware)</h2>
+        <div class="grid-2">
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <button id="btnMetronomeToggle" class="btn-warn" disabled style="width:100%; padding:14px; font-size:15px;">⏱️ Start / Stop Metronome</button>
+                </div>
+                <div class="slider-container">
+                    <label>Metronome Tempo / BPM (10–500): <span id="metronomeBpm_val">108</span> BPM</label>
+                    <input type="range" id="metronomeBpm" min="10" max="500" value="108" disabled>
+                </div>
+                <div class="slider-container">
+                    <label>Metronome Volume (1–10): <span id="metronomeVolume_val">5</span></label>
+                    <input type="range" id="metronomeVolume" min="1" max="10" value="5" disabled>
+                </div>
+            </div>
+            <div>
+                <div class="slider-container">
+                    <label>Time Signature / Beats:</label>
+                    <select id="metronomeBeats" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="0">0 (Weak beats only / No accent)</option>
+                        <option value="2">2 Beats (2/4)</option>
+                        <option value="3">3 Beats (3/4)</option>
+                        <option value="4" selected>4 Beats (4/4 Standard)</option>
+                        <option value="5">5 Beats (5/4)</option>
+                        <option value="6">6 Beats (6/4)</option>
+                        <option value="7">7 Beats (7/4)</option>
+                    </select>
+                </div>
+                <div class="slider-container" style="margin-top: 10px;">
+                    <label>Metronome Click Sound / Tone:</label>
+                    <select id="metronomeTone" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="0" selected>Click (Acoustic Bell / Standard)</option>
+                        <option value="1">Electronic (Synthetic Click)</option>
+                        <option value="2">Voice (Japanese Count)</option>
+                        <option value="3">Voice (English Count)</option>
+                    </select>
+                </div>
+                <div class="slider-container" style="margin-top: 10px;">
+                    <label>Rhythm Subdivision Pattern:</label>
+                    <select id="metronomePattern" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="0" selected>Quarter Notes (1/4)</option>
+                        <option value="1">Eighth Notes (1/8)</option>
+                        <option value="2">Eighth Note Triplets (1/8T)</option>
+                        <option value="3">Sixteenth Notes (1/16)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 5: SONG PLAYER & USB MEDIA COMPANION -->
+    <div class="panel">
+        <h2>5. Internal Song Player & USB Companion</h2>
+        <div class="grid-2">
+            <div>
+                <div class="btn-group" style="margin-bottom: 15px;">
+                    <button id="btnSongPlay" disabled style="background:#2e7d32;">▶️ Play / Pause Song</button>
+                    <button id="btnSongStop" class="btn-danger" disabled>⏹️ Stop Song</button>
+                </div>
+                <div class="slider-container">
+                    <label>Song Volume (1–10): <span id="songVolume_val">10</span></label>
+                    <input type="range" id="songVolume" min="1" max="10" value="10" disabled>
+                </div>
+            </div>
+            <div>
+                <div class="slider-container">
+                    <label>Count-In Measure Setup:</label>
+                    <select id="countInSelect" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="0">Off (Start Immediately)</option>
+                        <option value="1" selected>1 Measure Count-In</option>
+                        <option value="2">2 Measures Count-In</option>
+                    </select>
+                </div>
+                <div style="margin-top: 15px;">
+                    <label style="font-size:13px; color:#b5b5b5; display:block; margin-bottom:5px;">USB Flash Drive Track Navigation:</label>
+                    <div class="btn-group">
+                        <button id="btnUsbPrev" disabled style="background:#393e46; min-width:80px;">⏮️ Prev</button>
+                        <button id="btnUsbPlay" disabled style="background:#00adb5; min-width:100px;">▶️ Play USB</button>
+                        <button id="btnUsbNext" disabled style="background:#393e46; min-width:80px;">⏭️ Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 6: PIANO DESIGNER & HARDWARE SETTINGS (SYSEX DT1) -->
+    <div class="panel">
+        <h2>6. Piano Designer & Hardware Settings (Roland DT1 SysEx)</h2>
+        <div class="grid-2">
+            <div>
+                <div class="slider-container">
+                    <label>Master Hardware Volume: <span id="masterVolume_val">100</span></label>
+                    <input type="range" id="masterVolume" min="0" max="127" value="100" disabled>
+                </div>
+                <div class="slider-container" style="margin-top: 10px;">
+                    <label>Key Touch Dynamics (Touch Sensitivity):</label>
+                    <select id="keyTouchSelect" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="-2">Super Light (Extremely Sensitive)</option>
+                        <option value="-1">Light</option>
+                        <option value="0" selected>Medium (Standard Acoustic Feel)</option>
+                        <option value="1">Heavy</option>
+                        <option value="2">Super Heavy</option>
+                        <option value="-3">Fix (Fixed Velocity 127)</option>
+                    </select>
+                </div>
+                <div class="slider-container" style="margin-top: 10px;">
+                    <label>Brilliance Tone Adjustment:</label>
+                    <select id="brillianceSelect" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="-1">Mellow (-1)</option>
+                        <option value="0" selected>Normal (0)</option>
+                        <option value="1">Bright (+1)</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <div class="slider-container">
+                    <label>Speaker Output Switch:</label>
+                    <select id="speakerSwitchSelect" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="Stand" selected>Stand (Optimized for Keyboard Stand)</option>
+                        <option value="Desk">Desk (Optimized for Tabletop Placement)</option>
+                        <option value="Off">Off (Mute Internal Speakers for Line Out)</option>
+                    </select>
+                </div>
+                <div class="slider-container" style="margin-top: 10px;">
+                    <label>Auto Off Timer (Power Saving):</label>
+                    <select id="autoOffSelect" disabled style="padding: 8px; font-size: 13px;">
+                        <option value="Off">Off (Always On / Disabled)</option>
+                        <option value="10">10 Minutes</option>
+                        <option value="30">30 Minutes</option>
+                        <option value="240" selected>240 Minutes (4 Hours - Default)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 7: PRESET MANAGEMENT -->
+    <div class="panel">
+        <h2>7. Preset Management & Web Settings Storage</h2>
         <div class="row" style="display: flex; gap: 10px; flex-wrap: wrap;">
             <input type="text" id="presetNameInput" placeholder="New preset name (e.g. Soft Piano Ambience 80)" style="flex: 2; padding: 10px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px;">
             <button id="btnSavePreset" style="flex: 1;">💾 Save Preset</button>
@@ -166,9 +304,9 @@
         </div>
     </div>
 
-    <!-- SECTION 5: AUXILIARY COMMANDS & INSTRUMENT RESET -->
+    <!-- SECTION 8: AUXILIARY COMMANDS & RESET -->
     <div class="panel">
-        <h2>5. Auxiliary Commands & Instrument Reset</h2>
+        <h2>8. Auxiliary Commands & Hardware Reset</h2>
         <div class="btn-group">
             <button id="btnResetAllSliders" class="btn-warn" disabled>🔄 Reset All Sliders (FP-30X Default Values)</button>
             <button id="btnAllSoundOff" class="btn-danger" disabled>All Sound Off (CC 120)</button>
@@ -177,9 +315,9 @@
         </div>
     </div>
 
-    <!-- SECTION 6: DRUM VISUALIZER PANELS -->
+    <!-- SECTION 9: DRUM VISUALIZER PANELS -->
     <div id="drumVisualizer" class="panel hidden">
-        <h2>6. Selected Drum Kit Key Map</h2>
+        <h2>9. Selected Drum Kit Key Map</h2>
         <p class="subtitle">Check physical key assignments for sampled percussion on your FP-30X</p>
         <select id="drumKeySelect" disabled></select>
         <div class="table-responsive">
