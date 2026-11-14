@@ -85,8 +85,17 @@ Range 0–10 (default: 1)
 
 ## AUTO OFF
 Tieni premuto
+
 * FUNCTION + 
   * A7: 10 min
   * A#7: 30 min
   * B7: 240 min
   * C8: OFF (always on)
+
+# Dimensions
+* h keys 15
+* h sides 66
+* l 130
+* l sides 129 (2)
+* l supports 79
+* d 28 (h 0-12.25-25)
